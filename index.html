@@ -1695,6 +1695,7 @@
           <span>Send Inquiry</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
         </button>
+        <div class="review-form-error" id="contactFormError">Something went wrong. Please try again.</div>
       </form>
     </div>
   </section>
@@ -1774,6 +1775,7 @@
 
   <!-- Toast Notification -->
   <div class="review-toast" id="reviewToast">Thanks for your review! Your review is now live.</div>
+  <div class="review-toast" id="contactToast">Thanks! We'll be in touch soon.</div>
 
   <!-- FAQ SECTION -->
   <section class="faq-section" id="faq">
@@ -2246,25 +2248,50 @@
             btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
             
-            // Simulate network request
-            setTimeout(() => {
-              btn.innerHTML = 'Message Sent! <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-              btn.style.background = '#34c759';
-              btn.style.color = '#fff';
-              btn.style.opacity = '1';
-              
-              formInputs.forEach(input => {
-                input.value = '';
-                input.classList.remove('is-valid');
-              });
-              
-              setTimeout(() => {
+            // Real network request to Supabase
+            const contactSupabase = window.supabase.createClient(
+              'https://pqxyihhmxrmvbsbcgbtu.supabase.co',
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBxeHlpaGhteHJtdmJzYmNnYnR1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MTQ1ODMsImV4cCI6MjA5MzE5MDU4M30.LaWfC0uBbef7kLYGHQMQS_APqpF6Ph8Mh1K-D_z8LoM'
+            );
+            const contactFormError = document.getElementById('contactFormError');
+            if (contactFormError) contactFormError.style.display = 'none';
+
+            contactSupabase.from('project_inquiries').insert([{
+              full_name: document.getElementById('fullName').value.trim(),
+              email: document.getElementById('emailAddress').value.trim(),
+              message: document.getElementById('message').value.trim()
+            }]).then(({ error }) => {
+              if (error) {
+                console.error(error);
+                if (contactFormError) contactFormError.style.display = 'block';
                 btn.innerHTML = originalHTML;
-                btn.style.background = '';
-                btn.style.color = '';
+                btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
-              }, 3000);
-            }, 1500);
+              } else {
+                btn.innerHTML = 'Message Sent! <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                btn.style.background = '#34c759';
+                btn.style.color = '#fff';
+                btn.style.opacity = '1';
+                
+                formInputs.forEach(input => {
+                  input.value = '';
+                  input.classList.remove('is-valid');
+                });
+
+                const toast = document.getElementById('contactToast');
+                if (toast) {
+                  toast.classList.add('show');
+                  setTimeout(() => toast.classList.remove('show'), 3500);
+                }
+                
+                setTimeout(() => {
+                  btn.innerHTML = originalHTML;
+                  btn.style.background = '';
+                  btn.style.color = '';
+                  btn.style.pointerEvents = 'auto';
+                }, 3000);
+              }
+            });
           }
         });
       }
