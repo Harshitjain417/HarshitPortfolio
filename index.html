@@ -164,15 +164,15 @@
       flex: 1;
       display: flex;
       align-items: center;
+      gap: 48px;
       position: relative;
       z-index: 5;
     }
 
     .hero-left {
       flex: 1;
-      padding-right: 20px;
       z-index: 10;
-      transform: translateY(-8vh);
+      transform: translateY(-6vh);
     }
 
     .hero-left h2 {
@@ -190,6 +190,22 @@
       margin-top: 24px;
       line-height: 1.6;
       max-width: 90%;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-trusted {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.7;
     }
 
     .flip-word {
@@ -210,90 +226,171 @@
       }
     }
 
-    .hero-center {
-      position: absolute;
-      left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
+    /* ==========================================
+       🎬 HERO SHOWREEL PLAYER
+       ========================================== */
+    .hero-player-wrap {
+      flex: 1.1;
+      z-index: 10;
+      transform: translateY(-4vh);
+      max-width: 560px;
+    }
+
+    /* VCP = Video Component Player */
+    .vcp-component {
+      position: relative;
       width: 100%;
-      max-width: 1000px;
-      height: 115%;
-      z-index: 1;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.25), 0 0 1px rgba(255,255,255,0.12);
+      background: #000;
+      cursor: none;
+    }
+
+    [data-theme="dark"] .vcp-component {
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 1px rgba(255,255,255,0.12);
+    }
+
+    .vcp-video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+    }
+
+    .vcp-video-wrapper video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Center Play/Pause Overlay */
+    .vcp-play-overlay-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      border: none;
+      pointer-events: none;
+      cursor: none;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
+      z-index: 6;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      transition: opacity 0.3s ease, top 0.08s ease-out, left 0.08s ease-out, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      will-change: top, left, transform, opacity;
+    }
+
+    .vcp-play-overlay-btn svg {
+      width: 24px; height: 24px;
       pointer-events: none;
     }
 
-    .hero-image {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: bottom center;
-      transform: scale(1.60);
-      transform-origin: bottom center;
+    .vcp-play-overlay-btn.snap-back {
+      transition: opacity 0.3s ease, top 0.5s cubic-bezier(0.25,1,0.5,1), left 0.5s cubic-bezier(0.25,1,0.5,1), transform 0.5s cubic-bezier(0.25,1,0.5,1);
     }
 
+    .vcp-play-overlay-btn.playing { opacity: 0; }
+    .vcp-component:hover .vcp-play-overlay-btn.playing { opacity: 0.9; }
+    .vcp-component:has(#hero-volume-controls:hover) .vcp-play-overlay-btn {
+      opacity: 0 !important;
+      transition: opacity 0.15s ease !important;
+    }
 
-
-    .hero-right {
-      flex: 1;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding-left: 20px;
+    /* Volume Controls */
+    .vcp-volume-controls {
+      position: absolute;
       z-index: 10;
-      transform: translateY(-2vh);
-    }
-
-    .floating-card {
-      display: inline-flex;
-      flex-direction: column;
-      gap: 16px;
-      background: transparent;
-      border: none;
-      box-shadow: none;
-      backdrop-filter: none;
-      padding: 0;
-    }
-
-    [data-theme="dark"] .floating-card {
-      box-shadow: none;
-    }
-
-    .trusted-by {
       display: flex;
       align-items: center;
-      font-size: 0.95rem;
-      color: var(--text-color);
-      opacity: 0.9;
+      gap: 8px;
+      background: rgba(0,0,0,0.72);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px;
+      border-radius: 30px;
+      color: #fff;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      cursor: pointer !important;
     }
 
-    .strong-text {
-      font-weight: 600;
-      margin-left: 4px;
+    .vcp-volume-controls, .vcp-volume-controls * { cursor: pointer !important; }
+    .vcp-volume-controls.top-right { top: 14px; right: 14px; }
+
+    .vcp-mute-btn {
+      background: none; border: none; color: inherit;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      padding: 2px; border-radius: 50%;
+      width: 24px; height: 24px;
+      transition: background-color 0.2s;
+    }
+    .vcp-mute-btn:hover { background: rgba(255,255,255,0.1); }
+
+    .vcp-volume-slider-wrapper {
+      width: 0; overflow: hidden;
+      transition: width 0.3s cubic-bezier(0.25,1,0.5,1);
+      display: flex; align-items: center;
+    }
+    .vcp-volume-controls:hover .vcp-volume-slider-wrapper { width: 70px; margin-right: 4px; }
+
+    .vcp-volume-slider {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 4px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.25); outline: none;
+    }
+    .vcp-volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 10px; height: 10px;
+      border-radius: 50%; background: #fff; cursor: pointer;
+    }
+
+    /* Floating badge below the player */
+    .hero-player-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 0 4px;
     }
 
     .status-dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       background: #2ecc71;
       border-radius: 50%;
-      margin-right: 12px;
-      box-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
+      box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+      flex-shrink: 0;
     }
+
+    .hero-player-badge-text {
+      font-size: 0.85rem;
+      color: var(--text-color);
+      opacity: 0.65;
+    }
+
+    .strong-text { font-weight: 600; }
 
     .btn-dark {
       background: #111;
       color: #fff;
       border-radius: 8px;
       text-align: center;
-      width: 100%;
       font-weight: 600;
-      padding: 14px 24px;
+      padding: 12px 24px;
       box-shadow: 0 8px 30px rgba(0,0,0,0.15);
       border: none;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
+    .btn-dark:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.2); }
 
     [data-theme="dark"] .btn-dark {
       background: #fff;
@@ -302,10 +399,9 @@
 
     @media (max-width: 1024px) {
       .hero-left { transform: translateY(-4vh); }
-      .hero-left h2 { font-size: 3.5rem; }
-      .hero-center { width: 90%; }
+      .hero-left h2 { font-size: 3rem; }
+      .hero-player-wrap { transform: translateY(-2vh); }
       .nav-links { gap: 15px; }
-      .hero-right { transform: translateY(0); }
     }
 
     @media (max-width: 768px) {
@@ -313,6 +409,7 @@
         height: auto;
         min-height: 100vh;
         padding-top: 20px;
+        padding-bottom: 40px;
       }
       .hero-nav { 
         flex-wrap: nowrap; 
@@ -327,38 +424,21 @@
         align-items: flex-start; 
         justify-content: flex-start; 
         margin-top: 30px;
+        gap: 28px;
       }
       .hero-left { 
         width: 100%; 
-        padding-right: 0; 
         transform: none; 
         text-align: left;
       }
       .hero-left h2 { 
-        font-size: 42px; 
+        font-size: 38px; 
       }
-      .hero-subtext {
-        text-align: left;
-      }
-      .hero-center { 
-        position: relative; 
-        width: 100%; 
-        height: 45vh; 
-        min-height: 300px;
-        transform: none; 
-        left: auto; 
-        bottom: auto; 
-        margin-top: 20px;
-      }
-      .hero-image {
-        transform: scale(1.15);
-      }
-      .hero-right { 
-        width: 100%; 
-        justify-content: center; 
-        padding-left: 0; 
-        transform: translateY(-30px);
-        z-index: 10;
+      .hero-subtext { text-align: left; }
+      .hero-player-wrap {
+        width: 100%;
+        max-width: 100%;
+        transform: none;
       }
     }
 
@@ -1916,14 +1996,50 @@
       <div class="hero-left">
         <h2 class="diagonal-scroll-fade">High-impact SaaS &<br>motion graphics<br>that convert</h2>
         <p class="hero-subtext diagonal-scroll-fade">Product demos, launch videos, ads, and motion graphics built for SaaS founders who care about clarity, retention, and conversions.</p>
+        <div class="hero-cta-row">
+          <button class="btn-dark" onclick="document.getElementById('carousel-section').scrollIntoView({behavior: 'smooth'})">View My Work</button>
+          <span class="hero-trusted">
+            <span class="status-dot" style="margin-right:10px;"></span> Trusted by <span class="strong-text" style="margin-left:4px;">Global Brands</span>
+          </span>
+        </div>
       </div>
 
-      <div class="hero-right">
-        <div class="floating-card">
-          <div class="trusted-by">
-            <span class="status-dot"></span> Trusted by <span class="strong-text">Global Brands</span>
+      <!-- SHOWREEL PLAYER -->
+      <div class="hero-player-wrap">
+        <div class="vcp-component" id="hero-showreel">
+          <div class="vcp-video-wrapper">
+            <video id="hero-video" src="AI SaaS.mp4" autoplay muted loop playsinline preload="auto"></video>
           </div>
-          <button class="btn btn-dark" onclick="document.getElementById('carousel-section').scrollIntoView({behavior: 'smooth'})">View My Work</button>
+          <!-- Play/Pause Overlay -->
+          <button class="vcp-play-overlay-btn" id="hero-play-btn" aria-label="Play Showreel">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+          </button>
+          <!-- Mute / Volume controls -->
+          <div class="vcp-volume-controls top-right" id="hero-volume-controls">
+            <button class="vcp-mute-btn" id="hero-mute-btn" aria-label="Toggle Mute">
+              <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+              <svg class="icon-volume-low" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <svg class="icon-volume-high" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </button>
+            <div class="vcp-volume-slider-wrapper">
+              <input type="range" class="vcp-volume-slider" id="hero-vol-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
+            </div>
+          </div>
+        </div>
+        <div class="hero-player-badge">
+          <span class="status-dot"></span>
+          <span class="hero-player-badge-text">Showreel — <span class="strong-text">AI SaaS Demo</span></span>
         </div>
       </div>
     </div>
@@ -2925,6 +3041,119 @@
     // Build initial grid
     buildGrid();
     window.addEventListener('resize', buildGrid);
+
+    // ==========================================
+    // 🎬 HERO SHOWREEL PLAYER
+    // ==========================================
+    (function() {
+      const video     = document.getElementById('hero-video');
+      const playBtn   = document.getElementById('hero-play-btn');
+      const muteBtn   = document.getElementById('hero-mute-btn');
+      const volSlider = document.getElementById('hero-vol-slider');
+      const component = document.getElementById('hero-showreel');
+
+      if (!video || !playBtn || !muteBtn || !volSlider || !component) return;
+
+      let isMuted     = true;
+      let savedVolume = 0.8;
+
+      video.volume = savedVolume;
+      updateVolumeUI();
+
+      // Toggle play on overlay button or clicking video area
+      component.addEventListener('click', (e) => {
+        if (e.target.closest('#hero-volume-controls') || e.target.closest('#hero-play-btn')) return;
+        togglePlay();
+      });
+
+      muteBtn.addEventListener('click', () => {
+        isMuted = !isMuted;
+        video.muted = isMuted;
+        updateVolumeUI();
+      });
+
+      volSlider.addEventListener('input', (e) => {
+        const val   = parseFloat(e.target.value);
+        savedVolume = val;
+        video.volume = val;
+        isMuted      = val === 0;
+        video.muted  = isMuted;
+        updateVolumeUI();
+      });
+
+      video.addEventListener('play',  updatePlayStateUI);
+      video.addEventListener('pause', updatePlayStateUI);
+
+      function togglePlay() {
+        if (video.paused) {
+          video.play().catch(() => {
+            video.muted = true;
+            isMuted = true;
+            updateVolumeUI();
+            video.play();
+          });
+        } else {
+          video.pause();
+        }
+      }
+
+      function updatePlayStateUI() {
+        const playIcon  = playBtn.querySelector('.icon-play');
+        const pauseIcon = playBtn.querySelector('.icon-pause');
+        if (!video.paused) {
+          playBtn.classList.add('playing');
+          playIcon.style.display  = 'none';
+          pauseIcon.style.display = 'block';
+        } else {
+          playBtn.classList.remove('playing');
+          playIcon.style.display  = 'block';
+          pauseIcon.style.display = 'none';
+        }
+      }
+
+      function updateVolumeUI() {
+        const mutedIcon = muteBtn.querySelector('.icon-muted');
+        const lowIcon   = muteBtn.querySelector('.icon-volume-low');
+        const highIcon  = muteBtn.querySelector('.icon-volume-high');
+        if (isMuted || video.volume === 0) {
+          mutedIcon.style.display = 'block';
+          lowIcon.style.display   = 'none';
+          highIcon.style.display  = 'none';
+          volSlider.value = 0;
+        } else if (video.volume < 0.5) {
+          mutedIcon.style.display = 'none';
+          lowIcon.style.display   = 'block';
+          highIcon.style.display  = 'none';
+          volSlider.value = video.volume;
+        } else {
+          mutedIcon.style.display = 'none';
+          lowIcon.style.display   = 'none';
+          highIcon.style.display  = 'block';
+          volSlider.value = video.volume;
+        }
+      }
+
+      // Cursor-follow play button
+      component.addEventListener('mousemove', (e) => {
+        playBtn.classList.remove('snap-back');
+        const rect = component.getBoundingClientRect();
+        const half = 32; // half of 64px button
+        const x    = e.clientX - rect.left - half;
+        const y    = e.clientY - rect.top  - half;
+        const clampedX = Math.min(Math.max(x, 0), rect.width  - half * 2);
+        const clampedY = Math.min(Math.max(y, 0), rect.height - half * 2);
+        playBtn.style.left      = clampedX + 'px';
+        playBtn.style.top       = clampedY + 'px';
+        playBtn.style.transform = 'none';
+      });
+
+      component.addEventListener('mouseleave', () => {
+        playBtn.classList.add('snap-back');
+        playBtn.style.left      = '50%';
+        playBtn.style.top       = '50%';
+        playBtn.style.transform = 'translate(-50%, -50%) scale(0.4)';
+      });
+    })();
   </script>
 </body>
 </html>
