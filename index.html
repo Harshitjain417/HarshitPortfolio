@@ -613,6 +613,7 @@
       grid-template-columns: 1fr 1fr;
       gap: 60px;
       position: relative;
+      z-index: 1;
       overflow: hidden;
       box-shadow: 0 20px 40px rgba(0,0,0,0.02);
     }
@@ -832,6 +833,8 @@
       padding: 50px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.05);
       transition: box-shadow 0.4s ease, background 0.4s ease;
+      position: relative;
+      z-index: 1;
     }
 
     [data-theme="dark"] .contact-container {
@@ -1261,21 +1264,14 @@
     .review-card {
       width: 280px;
       flex-shrink: 0;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 16px;
       padding: 20px 22px;
       margin-right: 14px;
       transition: all 0.3s ease;
-    }
-
-    :root .review-card {
-      background: rgba(0,0,0,0.03);
-      border-color: rgba(0,0,0,0.08);
-    }
-    [data-theme="dark"] .review-card {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 1;
     }
 
     .review-card:hover {
@@ -1392,19 +1388,12 @@
     .review-form-card {
       max-width: 500px;
       margin: 0 auto;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 32px;
-    }
-
-    :root .review-form-card {
-      background: rgba(0,0,0,0.03);
-      border-color: rgba(0,0,0,0.1);
-    }
-    [data-theme="dark"] .review-form-card {
-      background: rgba(255,255,255,0.04);
-      border-color: rgba(255,255,255,0.1);
+      position: relative;
+      z-index: 1;
     }
 
     .review-form-group {
