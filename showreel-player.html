@@ -148,13 +148,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background-color: rgba(0, 0, 0, var(--vcp-volume-bg-opacity));
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 8px;
-      border-radius: 30px;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 12px;
+      border-radius: 100px;
       color: var(--vcp-volume-color);
-      transition: all 0.3s ease;
-      backdrop-filter: blur(8px);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      backdrop-filter: blur(12px);
       /* One consistent cursor for the entire volume area — no conflict */
       cursor: pointer !important;
     }
@@ -166,10 +166,10 @@
     }
 
     /* Corner positions */
-    .vcp-volume-controls.top-left    { top: 20px; left: 20px; }
-    .vcp-volume-controls.top-right   { top: 20px; right: 20px; }
-    .vcp-volume-controls.bottom-left  { bottom: 20px; left: 20px; }
-    .vcp-volume-controls.bottom-right { bottom: 20px; right: 20px; }
+    .vcp-volume-controls.top-left    { top: 24px; left: 24px; }
+    .vcp-volume-controls.top-right   { top: 24px; right: 24px; }
+    .vcp-volume-controls.bottom-left  { bottom: 24px; left: 24px; }
+    .vcp-volume-controls.bottom-right { bottom: 24px; right: 24px; }
 
     .vcp-mute-btn {
       background: none;
@@ -179,10 +179,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2px;
+      padding: 0;
       border-radius: 50%;
-      width: 24px;
-      height: 24px;
+      width: 32px;
+      height: 32px;
       transition: background-color 0.2s;
     }
 
@@ -200,7 +200,7 @@
 
     /* Reveal slider input on volume control wrapper hover */
     .vcp-volume-controls:hover .vcp-volume-slider-wrapper {
-      width: 75px;
+      width: 80px;
       margin-right: 4px;
     }
 
@@ -251,18 +251,18 @@
     <div class="vcp-volume-controls top-right" id="volume-controls-overlay">
       <button class="vcp-mute-btn" id="mute-overlay-btn" aria-label="Toggle Mute">
         <!-- Muted Icon -->
-        <svg class="icon-muted" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+        <svg class="icon-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
           <line x1="23" y1="9" x2="17" y2="15"></line>
           <line x1="17" y1="9" x2="23" y2="15"></line>
         </svg>
         <!-- Low Volume Icon -->
-        <svg class="icon-volume-low" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+        <svg class="icon-volume-low" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
           <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
         </svg>
         <!-- High Volume Icon -->
-        <svg class="icon-volume-high" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg class="icon-volume-high" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
           <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
         </svg>
