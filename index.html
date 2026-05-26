@@ -623,21 +623,19 @@
     }
 
     .faq-watermark {
-      position: absolute;
-      bottom: 40px;
-      left: 60px;
       font-size: 14rem;
       font-weight: 800;
       color: var(--text-color);
-      opacity: 0.02;
+      opacity: 0.05;
       pointer-events: none;
       z-index: 0;
       letter-spacing: -0.02em;
       line-height: 1;
+      user-select: none;
     }
 
     [data-theme="dark"] .faq-watermark {
-      opacity: 0.03;
+      opacity: 0.08;
     }
 
     .faq-left {
@@ -645,7 +643,7 @@
       z-index: 10;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
     }
 
     .faq-left h2 {
@@ -799,7 +797,10 @@
         padding: 40px;
       }
       .faq-watermark {
-        display: none;
+        display: block;
+        font-size: 6rem;
+        text-align: center;
+        margin-bottom: 20px;
       }
       .faq-answer-inner {
         padding-left: 24px;
@@ -2147,11 +2148,12 @@
   <!-- FAQ SECTION -->
   <section class="faq-section" id="faq">
     <div class="faq-container reveal-up">
-      <div class="faq-watermark">FAQ</div>
-      
       <div class="faq-left">
-        <h2>Questions & Answers</h2>
-        <p>Find answers to common questions here. If you can't find what you are looking for, feel free to reach out below!</p>
+        <div style="display: none;">
+          <h2>Questions & Answers</h2>
+          <p>Find answers to common questions here. If you can't find what you are looking for, feel free to reach out below!</p>
+        </div>
+        <div class="faq-watermark">FAQ</div>
       </div>
 
       <div class="faq-right">
