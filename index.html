@@ -30,6 +30,31 @@
       --overlay-gradient: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
     }
 
+    /* ==========================================
+       🕸️ INTERACTIVE HOVER GRID BACKGROUND
+       ========================================== */
+    .grid-mesh {
+      display: grid;
+      width: 100vw;
+      height: 100vh;
+      gap: 1px;
+      background: transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .grid-cell {
+      background-color: var(--bg-color);
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transition: background-color 0.4s ease;
+    }
+
     /* Responsive dimensions */
     @media (max-width: 768px) {
       :root {
@@ -574,7 +599,7 @@
       padding: 100px 5vw;
       display: flex;
       justify-content: center;
-      background-color: var(--bg-color);
+      background-color: transparent;
     }
 
     .faq-container {
@@ -794,7 +819,7 @@
       padding: 100px 5vw;
       display: flex;
       justify-content: center;
-      background-color: var(--bg-color);
+      background-color: transparent;
       position: relative;
     }
 
@@ -973,7 +998,7 @@
        ========================================== */
     .stats-section {
       width: 100vw;
-      background: var(--bg-color);
+      background: transparent;
       display: flex;
       justify-content: center;
       padding: 0 5vw;
@@ -986,7 +1011,7 @@
     .stats-grid {
       width: 100%;
       max-width: 1200px;
-      background: var(--bg-color);
+      background: transparent;
       border-radius: 16px;
       padding: 60px 40px;
       display: flex;
@@ -1113,7 +1138,7 @@
     .reviews-section {
       width: 100vw;
       padding: 100px 5vw 80px;
-      background-color: var(--bg-color);
+      background-color: transparent;
       position: relative;
       overflow: hidden;
     }
@@ -1800,6 +1825,9 @@
 </head>
 <body>
 
+  <!-- Fullscreen Interactive Grid Background -->
+  <div class="grid-mesh" id="gridMesh"></div>
+
   <!-- THEME TOGGLE -->
   <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
     <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
@@ -2308,6 +2336,9 @@
               document.documentElement.setAttribute('data-theme', 'dark');
               localStorage.setItem('theme', 'dark');
           }
+          // Reset grid spotlight on mode switch
+          const gridMesh = document.getElementById('gridMesh');
+          if (gridMesh) gridMesh.style.background = 'transparent';
       });
 
       const track = document.getElementById('carouselTrack');
@@ -2774,6 +2805,55 @@
       }, { threshold: 0.15 });
       document.querySelectorAll('.reviews-section .reveal-up').forEach(el => revObserver.observe(el));
     });
+
+    // ==========================================
+    // 🕸️ HOVER GRID ENGINE
+    // ==========================================
+    const gridMesh = document.getElementById('gridMesh');
+    const CELL_SIZE = 130;
+
+    function buildGrid() {
+      if (!gridMesh) return;
+      gridMesh.innerHTML = '';
+      
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      
+      const cols = Math.ceil(width / CELL_SIZE);
+      const rows = Math.ceil(height / CELL_SIZE);
+      
+      gridMesh.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      gridMesh.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+      
+      const totalCells = cols * rows;
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('grid-cell');
+        gridMesh.appendChild(cell);
+      }
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      if (!gridMesh) return;
+      const x = e.clientX;
+      const y = e.clientY;
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+      const spotColor = isDark
+        ? 'rgba(255, 255, 255, 0.25)' // White lines revealed on dark bg
+        : 'rgba(0, 0, 0, 0.15)';     // Dark lines revealed on light bg
+
+      gridMesh.style.background =
+        `radial-gradient(250px circle at ${x}px ${y}px, ${spotColor} 0%, transparent 100%)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      if (gridMesh) gridMesh.style.background = 'transparent';
+    });
+
+    // Build initial grid
+    buildGrid();
+    window.addEventListener('resize', buildGrid);
   </script>
 </body>
 </html>
