@@ -624,9 +624,8 @@
 
     .faq-watermark {
       position: absolute;
-      top: 50%;
-      left: 20px;
-      transform: translateY(-45%);
+      bottom: 40px;
+      left: 60px;
       font-size: 14rem;
       font-weight: 800;
       color: var(--text-color);
@@ -634,6 +633,7 @@
       pointer-events: none;
       z-index: 0;
       letter-spacing: -0.02em;
+      line-height: 1;
     }
 
     [data-theme="dark"] .faq-watermark {
@@ -799,10 +799,7 @@
         padding: 40px;
       }
       .faq-watermark {
-        font-size: 8rem;
-        top: 20%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        display: none;
       }
       .faq-answer-inner {
         padding-left: 24px;
