@@ -1968,11 +1968,11 @@
     }
 
     /* ==========================================
-       📱 iOS VIDEO PLAYER SECTION (PORTRAIT)
+       📱 iOS VIDEO PLAYER SHOWCASE (PREMIUM APPLE/FRAMER AESTHETIC)
        ========================================== */
     .ios-player-section {
       width: 100vw;
-      padding: 80px 5vw;
+      padding: 100px 5vw;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1983,84 +1983,131 @@
 
     .ios-player-header {
       text-align: center;
-      margin-bottom: 50px;
+      margin-bottom: 60px;
+      z-index: 10;
     }
 
     .ios-player-header h2 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 600;
-      letter-spacing: -0.03em;
-      margin-bottom: 12px;
+      letter-spacing: -0.04em;
+      margin-bottom: 16px;
       color: var(--text-color);
+      font-family: 'Inter', sans-serif;
     }
 
     .ios-player-header p {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       color: var(--text-color);
-      opacity: 0.6;
+      opacity: 0.5;
       max-width: 600px;
       margin: 0 auto;
+      line-height: 1.5;
     }
 
-    /* Device Container */
-    .ios-device-container {
+    /* Premium Product Showcase Card */
+    .ios-showcase-card {
       width: 100%;
+      max-width: 860px;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 36px;
+      padding: 70px 40px;
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 1500px;
-    }
-
-    /* Portrait iPhone Mockup */
-    .ios-phone-mockup {
-      width: 100%;
-      max-width: 360px;
-      aspect-ratio: 9 / 19.5;
-      background: #000;
-      border: 12px solid #1f1f23;
-      border-radius: 50px;
       position: relative;
-      box-shadow: 
-        0 30px 60px -15px rgba(0, 0, 0, 0.45), 
-        0 0 0 4px #2c2c30,
-        inset 0 0 0 2px rgba(255, 255, 255, 0.05);
       overflow: hidden;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      box-shadow: 
+        0 40px 100px -30px rgba(0, 0, 0, 0.05),
+        0 20px 40px -20px rgba(0, 0, 0, 0.03);
+      z-index: 5;
     }
 
-    [data-theme="dark"] .ios-phone-mockup {
+    [data-theme="dark"] .ios-showcase-card {
+      background: #0d0d11;
+      border-color: rgba(255, 255, 255, 0.04);
       box-shadow: 
-        0 40px 80px -20px rgba(0, 0, 0, 0.8), 
-        0 0 0 4px #1c1c1e,
+        0 40px 100px -30px rgba(0, 0, 0, 0.4),
+        0 20px 40px -20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Grid Mesh Background for Showcase */
+    .ios-showcase-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      background-position: center;
+      mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+      -webkit-mask-image: radial-gradient(circle at center, black 60%, transparent 100%);
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    [data-theme="dark"] .ios-showcase-grid {
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      opacity: 0.6;
+    }
+
+    /* Device Container with Perspective */
+    .ios-device-container {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 2000px;
+    }
+
+    /* High-Fidelity iPhone 15 Pro Mockup */
+    .ios-phone-mockup {
+      width: 320px;
+      aspect-ratio: 9 / 19.5;
+      background: #000000;
+      border: 9px solid #1a1a1e;
+      border-radius: 46px;
+      position: relative;
+      outline: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        0 30px 80px -20px rgba(0, 0, 0, 0.25),
+        0 15px 40px -15px rgba(0, 0, 0, 0.15),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.04);
+      overflow: hidden;
+      cursor: pointer;
+      /* Smooth cubic easing for spring-like physics */
+      transition: 
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+        box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, box-shadow;
+    }
+
+    .ios-phone-mockup:hover {
+      transform: translateY(-10px) scale(1.02) rotateX(2deg);
+      box-shadow: 
+        0 50px 100px -25px rgba(0, 0, 0, 0.35),
+        0 25px 60px -20px rgba(0, 0, 0, 0.25),
         inset 0 0 0 2px rgba(255, 255, 255, 0.08);
     }
 
-    /* Dynamic Island notch at top-center */
-    .ios-dynamic-island {
-      position: absolute;
-      left: 50%;
-      top: 14px;
-      transform: translateX(-50%);
-      width: 92px;
-      height: 26px;
-      background: #000;
-      border-radius: 20px;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      padding-right: 14px;
-      gap: 5px;
-      box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.1);
-      pointer-events: none;
+    [data-theme="dark"] .ios-phone-mockup {
+      border-color: #121214;
+      box-shadow: 
+        0 40px 100px -25px rgba(0, 0, 0, 0.6),
+        0 20px 50px -20px rgba(0, 0, 0, 0.5),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.06);
     }
-    
-    .ios-camera-lens {
-      width: 5px;
-      height: 5px;
-      background: radial-gradient(circle, #0e111a 20%, #1c2738 70%);
-      border-radius: 50%;
-      opacity: 0.85;
+
+    [data-theme="dark"] .ios-phone-mockup:hover {
+      box-shadow: 
+        0 60px 120px -30px rgba(0, 0, 0, 0.75),
+        0 30px 70px -25px rgba(0, 0, 0, 0.65),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.1);
     }
 
     /* Screen Area */
@@ -2069,9 +2116,6 @@
       height: 100%;
       position: relative;
       background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       border-radius: 38px;
       overflow: hidden;
     }
@@ -2083,23 +2127,69 @@
       display: block;
     }
 
+    /* Glossy Screen glare refraction */
+    .ios-screen-glare {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0) 100%);
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    /* Dynamic Island notch */
+    .ios-dynamic-island {
+      position: absolute;
+      left: 50%;
+      top: 13px;
+      transform: translateX(-50%);
+      width: 88px;
+      height: 25px;
+      background: #000000;
+      border-radius: 18px;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 14px;
+      box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+    
+    .ios-camera-lens {
+      width: 5px;
+      height: 5px;
+      background: radial-gradient(circle, #090b11 20%, #151d2c 70%);
+      border-radius: 50%;
+      opacity: 0.85;
+      position: relative;
+    }
+    .ios-camera-lens::after {
+      content: '';
+      position: absolute;
+      top: 1px; left: 1px;
+      width: 2px; height: 2px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
     /* Realistic iOS Status Bar */
     .ios-status-bar {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 44px;
+      height: 38px;
       padding: 0 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       z-index: 95;
-      color: #fff;
+      color: #ffffff;
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 550;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
       pointer-events: none;
+      letter-spacing: -0.1px;
     }
 
     .ios-status-time {
@@ -2113,12 +2203,12 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
 
     .ios-status-icons svg {
-      width: 15px;
-      height: 15px;
+      width: 14px;
+      height: 14px;
       fill: currentColor;
     }
 
@@ -2130,15 +2220,16 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 44px 18px 20px 18px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.6) 100%);
+      padding: 40px 16px 18px 16px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 22%, transparent 78%, rgba(0,0,0,0.65) 100%);
       opacity: 0;
-      transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
       pointer-events: none;
     }
 
+    /* Fade-in controls on hover/play */
     .ios-phone-mockup:hover .ios-player-controls,
     .ios-player-controls.visible {
       opacity: 1;
@@ -2152,38 +2243,39 @@
       align-items: center;
       width: 100%;
       pointer-events: auto;
-      margin-top: 6px;
+      margin-top: 2px;
     }
 
     .ios-done-btn {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.12);
       border: none;
-      color: #fff;
-      padding: 6px 14px;
+      color: #ffffff;
+      padding: 5px 12px;
       border-radius: 100px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
     }
 
     .ios-done-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.03);
     }
 
     .ios-top-right-controls {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
 
     .ios-icon-btn {
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.12);
       border: none;
-      color: #fff;
-      width: 32px;
-      height: 32px;
+      color: #ffffff;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -2195,58 +2287,79 @@
     }
 
     .ios-icon-btn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.08);
     }
     
     .ios-icon-btn svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       fill: currentColor;
     }
 
-    /* iOS Center Controls */
+    /* Center Controls - Framer Cinematic Glassmorphism Button */
     .ios-center-controls {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 30px;
+      gap: 25px;
       pointer-events: auto;
     }
 
     .ios-play-btn-large {
-      width: 72px;
-      height: 72px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      color: #fff;
+      background: rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
-      transition: transform 0.2s, background 0.2s, border-color 0.2s;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s, border-color 0.3s, opacity 0.5s;
+      box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.15),
+        0 1px 0 rgba(255, 255, 255, 0.1) inset;
+      z-index: 60;
     }
 
     .ios-play-btn-large:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: rgba(255, 255, 255, 0.45);
+      background: rgba(255, 255, 255, 0.35);
+      border-color: rgba(255, 255, 255, 0.5);
       transform: scale(1.1);
     }
 
     .ios-play-btn-large svg {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       fill: currentColor;
+      transition: transform 0.2s ease;
+    }
+
+    .ios-play-btn-large:active {
+      transform: scale(0.95);
+    }
+
+    /* Fade out play button when playing */
+    .ios-phone-mockup.is-playing .ios-play-btn-large {
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+    }
+
+    .ios-phone-mockup.is-playing:hover .ios-play-btn-large {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
     }
 
     .ios-skip-btn {
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -2255,13 +2368,13 @@
     }
 
     .ios-skip-btn:hover {
-      color: #fff;
+      color: #ffffff;
       transform: scale(1.1);
     }
 
     .ios-skip-btn svg {
-      width: 26px;
-      height: 26px;
+      width: 22px;
+      height: 22px;
       fill: currentColor;
     }
 
@@ -2269,31 +2382,31 @@
     .ios-bottom-bar {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
       width: 100%;
       pointer-events: auto;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     /* Progress bar layout */
     .ios-progress-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
     }
 
     .ios-time-label {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 500;
-      color: rgba(255, 255, 255, 0.8);
-      min-width: 32px;
+      color: rgba(255, 255, 255, 0.7);
+      min-width: 28px;
     }
 
     .ios-progress-container {
       flex: 1;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.3);
+      height: 3px;
+      background: rgba(255, 255, 255, 0.25);
       border-radius: 100px;
       position: relative;
       cursor: pointer;
@@ -2303,29 +2416,29 @@
     }
 
     .ios-progress-container:hover {
-      height: 6px;
+      height: 5px;
     }
 
     .ios-progress-bar {
       height: 100%;
-      background: #fff;
+      background: #ffffff;
       border-radius: 100px;
       width: 0%;
       position: relative;
     }
 
     .ios-progress-handle {
-      width: 10px;
-      height: 10px;
-      background: #fff;
+      width: 8px;
+      height: 8px;
+      background: #ffffff;
       border-radius: 50%;
       position: absolute;
-      right: -5px;
+      right: -4px;
       top: 50%;
       transform: translateY(-50%);
       opacity: 0;
       transition: opacity 0.2s;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
 
     .ios-progress-container:hover .ios-progress-handle {
@@ -2343,15 +2456,15 @@
     .ios-volume-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .ios-volume-slider {
       -webkit-appearance: none;
       appearance: none;
-      width: 70px;
-      height: 4px;
-      background: rgba(255,255,255,0.3);
+      width: 60px;
+      height: 3px;
+      background: rgba(255,255,255,0.25);
       border-radius: 100px;
       outline: none;
     }
@@ -2359,8 +2472,8 @@
     .ios-volume-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: #fff;
       cursor: pointer;
@@ -2368,29 +2481,29 @@
 
     .ios-bottom-right-utils {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
     }
 
     .ios-small-btn {
       background: none;
       border: none;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 4px;
+      padding: 3px;
       transition: color 0.2s;
     }
 
     .ios-small-btn:hover {
-      color: #fff;
+      color: #ffffff;
     }
 
     .ios-small-btn svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: currentColor;
     }
 
@@ -2400,57 +2513,61 @@
       bottom: 8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 110px;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.75);
+      width: 100px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 100px;
       z-index: 90;
       pointer-events: none;
     }
 
     @media (max-width: 480px) {
+      .ios-showcase-card {
+        padding: 40px 20px;
+        border-radius: 28px;
+      }
       .ios-phone-mockup {
-        max-width: 290px;
-        border-width: 10px;
+        width: 280px;
+        border-width: 8px;
         border-radius: 40px;
       }
       .ios-screen-content {
-        border-radius: 30px;
+        border-radius: 32px;
       }
       .ios-dynamic-island {
-        width: 78px;
+        width: 76px;
         height: 22px;
         top: 10px;
       }
       .ios-status-bar {
-        height: 38px;
-        padding: 0 18px;
+        height: 34px;
+        padding: 0 16px;
         font-size: 10px;
       }
       .ios-player-controls {
-        padding: 38px 12px 16px 12px;
+        padding: 34px 10px 14px 10px;
       }
       .ios-center-controls {
-        gap: 20px;
+        gap: 18px;
       }
       .ios-play-btn-large {
-        width: 60px;
-        height: 60px;
+        width: 54px;
+        height: 54px;
       }
       .ios-play-btn-large svg {
-        width: 22px;
-        height: 22px;
-      }
-      .ios-skip-btn svg {
         width: 20px;
         height: 20px;
+      }
+      .ios-skip-btn svg {
+        width: 18px;
+        height: 18px;
       }
       .ios-volume-slider {
         width: 50px;
       }
       .ios-home-indicator {
-        width: 90px;
-        height: 4px;
+        width: 80px;
+        height: 3px;
         bottom: 6px;
       }
     }
@@ -2580,131 +2697,142 @@
       <p>Play with the simulated iOS controls to watch my work in action on a vertical mobile screen.</p>
     </div>
 
-    <div class="ios-device-container">
-      <!-- Portrait iPhone Mockup -->
-      <div class="ios-phone-mockup" id="ios-phone-mockup">
-        
-        <!-- Top Dynamic Island Notch -->
-        <div class="ios-dynamic-island">
-          <div class="ios-camera-lens"></div>
-        </div>
+    <!-- Showcase Container Card -->
+    <div class="ios-showcase-card">
+      <!-- Grid Background -->
+      <div class="ios-showcase-grid"></div>
 
-        <!-- Phone screen -->
-        <div class="ios-screen-content">
-          <!-- Realistic iOS Status Bar -->
-          <div class="ios-status-bar">
-            <div class="ios-status-time">9:41</div>
-            <div class="ios-status-icons">
-              <!-- Cellular Signal -->
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                <path d="M2 22h20V2z"/>
-              </svg>
-              <!-- Wifi Icon -->
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-                <path d="M12 21a2 2 0 0 1-1.41-.59l-8.5-8.5a2 2 0 0 1 0-2.82C3.4 7.78 7.53 6 12 6s8.6 1.78 9.91 3.09a2 2 0 0 1 0 2.82l-8.5 8.5A2 2 0 0 1 12 21z"/>
-              </svg>
-              <!-- Battery Icon -->
-              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" style="transform: translateY(1px);">
-                <rect x="2" y="7" width="16" height="10" rx="2"/>
-                <rect x="5" y="10" width="10" height="4" fill="currentColor"/>
-                <path d="M20 10v4" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
+      <!-- Device Container -->
+      <div class="ios-device-container">
+        <!-- Portrait iPhone Mockup -->
+        <div class="ios-phone-mockup" id="ios-phone-mockup">
+          
+          <!-- Top Dynamic Island Notch -->
+          <div class="ios-dynamic-island">
+            <div class="ios-camera-lens"></div>
           </div>
 
-          <video id="ios-video" src="Comp%201.mp4" loop playsinline preload="auto"></video>
-          
-          <!-- Home Indicator -->
-          <div class="ios-home-indicator"></div>
+          <!-- Phone screen -->
+          <div class="ios-screen-content">
+            <!-- Glare Refraction Overlay -->
+            <div class="ios-screen-glare"></div>
 
-          <!-- iOS Custom Controls Overlay -->
-          <div class="ios-player-controls" id="ios-player-controls">
+            <!-- Realistic iOS Status Bar -->
+            <div class="ios-status-bar">
+              <div class="ios-status-time">9:41</div>
+              <div class="ios-status-icons">
+                <!-- Cellular Signal -->
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                  <path d="M2 22h20V2z"/>
+                </svg>
+                <!-- Wifi Icon -->
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+                  <path d="M12 21a2 2 0 0 1-1.41-.59l-8.5-8.5a2 2 0 0 1 0-2.82C3.4 7.78 7.53 6 12 6s8.6 1.78 9.91 3.09a2 2 0 0 1 0 2.82l-8.5 8.5A2 2 0 0 1 12 21z"/>
+                </svg>
+                <!-- Battery Icon -->
+                <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2" fill="none" style="transform: translateY(1px);">
+                  <rect x="2" y="7" width="16" height="10" rx="2"/>
+                  <rect x="5" y="10" width="10" height="4" fill="currentColor"/>
+                  <path d="M20 10v4" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Autoplay Muted Loop Video -->
+            <video id="ios-video" src="Comp%201.mp4" autoplay muted loop playsinline preload="auto"></video>
             
-            <!-- Top Controls -->
-            <div class="ios-top-bar">
-              <button class="ios-done-btn" id="ios-done-btn">Done</button>
-              <div class="ios-top-right-controls">
-                <button class="ios-icon-btn" id="ios-pip-btn" title="Picture in Picture">
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 11h-8v6h8v-6zm4-7H1c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H1V6h22v12z"/>
+            <!-- Home Indicator -->
+            <div class="ios-home-indicator"></div>
+
+            <!-- iOS Custom Controls Overlay -->
+            <div class="ios-player-controls" id="ios-player-controls">
+              
+              <!-- Top Controls -->
+              <div class="ios-top-bar">
+                <button class="ios-done-btn" id="ios-done-btn">Done</button>
+                <div class="ios-top-right-controls">
+                  <button class="ios-icon-btn" id="ios-pip-btn" title="Picture in Picture">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 11h-8v6h8v-6zm4-7H1c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H1V6h22v12z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Center Controls -->
+              <div class="ios-center-controls">
+                <button class="ios-skip-btn" id="ios-skip-back" title="Go Back 15s">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                    <path d="M3 3v5h5"/>
+                    <text x="12" y="15" font-size="8" font-family="-apple-system, sans-serif" font-weight="bold" fill="currentColor" text-anchor="middle">15</text>
+                  </svg>
+                </button>
+                
+                <button class="ios-play-btn-large" id="ios-play-btn" title="Play/Pause">
+                  <svg id="ios-play-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                  <svg id="ios-pause-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                  </svg>
+                </button>
+
+                <button class="ios-skip-btn" id="ios-skip-forward" title="Go Forward 15s">
+                  <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                    <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                    <path d="M21 3v5h-5"/>
+                    <text x="12" y="15" font-size="8" font-family="-apple-system, sans-serif" font-weight="bold" fill="currentColor" text-anchor="middle">15</text>
                   </svg>
                 </button>
               </div>
-            </div>
 
-            <!-- Center Controls -->
-            <div class="ios-center-controls">
-              <button class="ios-skip-btn" id="ios-skip-back" title="Go Back 15s">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                  <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                  <path d="M3 3v5h5"/>
-                  <text x="12" y="15" font-size="8" font-family="-apple-system, sans-serif" font-weight="bold" fill="currentColor" text-anchor="middle">15</text>
-                </svg>
-              </button>
-              
-              <button class="ios-play-btn-large" id="ios-play-btn" title="Play/Pause">
-                <svg id="ios-play-icon" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-                <svg id="ios-pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                </svg>
-              </button>
+              <!-- Bottom Controls -->
+              <div class="ios-bottom-bar">
+                <!-- Progress Timeline Slider -->
+                <div class="ios-progress-row">
+                  <span class="ios-time-label" id="ios-time-current">0:00</span>
+                  <div class="ios-progress-container" id="ios-progress-container">
+                    <div class="ios-progress-bar" id="ios-progress-bar">
+                      <div class="ios-progress-handle"></div>
+                    </div>
+                  </div>
+                  <span class="ios-time-label" id="ios-time-duration">-0:00</span>
+                </div>
 
-              <button class="ios-skip-btn" id="ios-skip-forward" title="Go Forward 15s">
-                <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                  <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
-                  <path d="M21 3v5h-5"/>
-                  <text x="12" y="15" font-size="8" font-family="-apple-system, sans-serif" font-weight="bold" fill="currentColor" text-anchor="middle">15</text>
-                </svg>
-              </button>
-            </div>
+                <!-- Extra Bottom Utilities -->
+                <div class="ios-util-row">
+                  <!-- Volume Control -->
+                  <div class="ios-volume-wrap">
+                    <button class="ios-small-btn" id="ios-mute-btn" title="Mute/Unmute">
+                      <svg id="ios-mute-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <line x1="23" y1="9" x2="17" y2="15"/>
+                        <line x1="17" y1="9" x2="23" y2="15"/>
+                      </svg>
+                      <svg id="ios-volume-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                      </svg>
+                    </button>
+                    <input type="range" class="ios-volume-slider" id="ios-volume-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Volume Slider">
+                  </div>
 
-            <!-- Bottom Controls -->
-            <div class="ios-bottom-bar">
-              <!-- Progress Timeline Slider -->
-              <div class="ios-progress-row">
-                <span class="ios-time-label" id="ios-time-current">0:00</span>
-                <div class="ios-progress-container" id="ios-progress-container">
-                  <div class="ios-progress-bar" id="ios-progress-bar">
-                    <div class="ios-progress-handle"></div>
+                  <!-- Fullscreen button -->
+                  <div class="ios-bottom-right-utils">
+                    <button class="ios-small-btn" id="ios-fullscreen-btn" title="Fullscreen">
+                      <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+                      </svg>
+                    </button>
                   </div>
                 </div>
-                <span class="ios-time-label" id="ios-time-duration">-0:00</span>
               </div>
 
-              <!-- Extra Bottom Utilities -->
-              <div class="ios-util-row">
-                <!-- Volume Control -->
-                <div class="ios-volume-wrap">
-                  <button class="ios-small-btn" id="ios-mute-btn" title="Mute/Unmute">
-                    <svg id="ios-mute-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" style="display:none;">
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                      <line x1="23" y1="9" x2="17" y2="15"/>
-                      <line x1="17" y1="9" x2="23" y2="15"/>
-                    </svg>
-                    <svg id="ios-volume-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
-                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                    </svg>
-                  </button>
-                  <input type="range" class="ios-volume-slider" id="ios-volume-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Volume Slider">
-                </div>
-
-                <!-- Fullscreen button -->
-                <div class="ios-bottom-right-utils">
-                  <button class="ios-small-btn" id="ios-fullscreen-btn" title="Fullscreen">
-                    <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-                      <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-                    </svg>
-                  </button>
-                </div>
-              </div>
             </div>
-
           </div>
-        </div>
 
+        </div>
       </div>
     </div>
   </section>
@@ -3816,9 +3944,11 @@
         if (iosVideo.paused) {
           iosPlayIcon.style.display = "block";
           iosPauseIcon.style.display = "none";
+          iosMockup.classList.remove("is-playing");
         } else {
           iosPlayIcon.style.display = "none";
           iosPauseIcon.style.display = "block";
+          iosMockup.classList.add("is-playing");
         }
       }
 
@@ -3829,8 +3959,20 @@
         } else {
           iosVideo.pause();
         }
-        updatePlayUI();
       }
+
+      // Bind button events
+      iosPlayBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePlay();
+      });
+
+      // Bind media events
+      iosVideo.addEventListener("play", updatePlayUI);
+      iosVideo.addEventListener("pause", updatePlayUI);
+
+      // Sync initial state
+      updatePlayUI();
 
       // Click event for mockup: clicking anywhere outside buttons/scrubber toggles play
       iosMockup.addEventListener("click", (e) => {
