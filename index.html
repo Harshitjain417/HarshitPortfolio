@@ -3051,6 +3051,20 @@
           
           const video = item.querySelector('video');
           video.play().catch(err => console.warn("Autoplay blocked by browser:", err));
+
+          // Auto-mute inactive slides to prevent audio overlap/clutter
+          if (!isActive) {
+            video.muted = true;
+            const muteBtn = item.querySelector('.carousel-mute-btn');
+            if (muteBtn) {
+              const soundOn = muteBtn.querySelector('.icon-sound-on');
+              const soundOff = muteBtn.querySelector('.icon-sound-off');
+              if (soundOn && soundOff) {
+                soundOn.style.display = 'none';
+                soundOff.style.display = 'block';
+              }
+            }
+          }
         });
 
         // Update Arrow Button opacities based on boundaries
