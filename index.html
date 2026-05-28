@@ -519,6 +519,10 @@
       cursor: grabbing;
     }
 
+    .carousel-track.no-transition .carousel-item-inner {
+      transition: none !important;
+    }
+
     /* ==========================================
        🎬 CAROUSEL ITEM (THE CARDS)
        ========================================== */
@@ -3056,8 +3060,10 @@
         const gap = parseFloat(getComputedStyle(track).gap) || 0;
         
         if (withTransition) {
+          track.classList.remove('no-transition');
           track.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
         } else {
+          track.classList.add('no-transition');
           track.style.transition = 'none';
         }
         
@@ -3093,6 +3099,14 @@
         prevBtn.style.cursor = "pointer";
         nextBtn.style.opacity = "1";
         nextBtn.style.cursor = "pointer";
+
+        // If snapping instantly, force a layout reflow and remove the override class in the next frames
+        if (!withTransition) {
+          track.offsetHeight; // force reflow
+          setTimeout(() => {
+            track.classList.remove('no-transition');
+          }, 20);
+        }
       }
 
       // Transitionend event listener for endless loop snapping
