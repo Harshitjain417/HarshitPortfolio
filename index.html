@@ -619,11 +619,11 @@
       transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
     }
 
-    /* Mute button on carousel card */
-    .carousel-mute-btn {
+    /* Mute and Play buttons on carousel card */
+    .carousel-mute-btn,
+    .carousel-play-btn {
       position: absolute;
       top: 20px;
-      right: 20px;
       width: 36px;
       height: 36px;
       border-radius: 50%;
@@ -642,18 +642,29 @@
       pointer-events: auto;
     }
 
-    .carousel-mute-btn svg {
+    .carousel-mute-btn {
+      right: 20px;
+    }
+
+    .carousel-play-btn {
+      left: 20px;
+    }
+
+    .carousel-mute-btn svg,
+    .carousel-play-btn svg {
       width: 18px;
       height: 18px;
       fill: currentColor;
     }
 
-    .carousel-mute-btn:hover {
+    .carousel-mute-btn:hover,
+    .carousel-play-btn:hover {
       transform: scale(1.08);
       background: rgba(0, 0, 0, 0.7);
     }
 
-    .carousel-mute-btn:active {
+    .carousel-mute-btn:active,
+    .carousel-play-btn:active {
       transform: scale(0.95);
     }
 
@@ -695,6 +706,7 @@
 
     /* Show on hover of carousel-item */
     .carousel-item:hover .carousel-mute-btn,
+    .carousel-item:hover .carousel-play-btn,
     .carousel-item:hover .carousel-scrubber-bar {
       opacity: 1;
     }
@@ -724,20 +736,23 @@
        ========================================== */
     .controls {
       position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 50%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
       display: flex;
-      gap: 16px;
+      justify-content: space-between;
+      padding: 0 4vw;
       z-index: 100;
+      pointer-events: none;
     }
 
     .controls button {
       background: var(--accent-color);
       border: 1px solid var(--border-color);
       color: var(--text-color);
-      width: 48px;
-      height: 48px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
@@ -745,6 +760,17 @@
       justify-content: center;
       backdrop-filter: blur(10px);
       transition: background 0.3s, transform 0.2s, color 0.3s;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 768px) {
+      .controls {
+        padding: 0 2vw;
+      }
+      .controls button {
+        width: 46px;
+        height: 46px;
+      }
     }
 
     .controls button:hover {
@@ -2425,6 +2451,27 @@
     </div>
   </section>
 
+  <!-- CAROUSEL SECTION WRAPPER -->
+  <section class="carousel-section" id="carousel-section">
+    <!-- CAROUSEL WRAPPER -->
+    <div class="carousel-container reveal-up">
+      <div class="carousel-track" id="carouselTrack">
+        <!-- Items generated dynamically by JS -->
+      </div>
+
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button id="prevBtn" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button id="nextBtn" aria-label="Next">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </section>
+
   <!-- IOS PLAYER SECTION -->
   <section class="ios-player-section reveal-up" id="mobile-showcase">
     <div class="reviews-header reveal-up" style="margin-bottom: 40px; text-align: center;">
@@ -2483,27 +2530,6 @@
 
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- CAROUSEL SECTION WRAPPER -->
-  <section class="carousel-section" id="carousel-section">
-    <!-- CAROUSEL WRAPPER -->
-    <div class="carousel-container reveal-up">
-      <div class="carousel-track" id="carouselTrack">
-        <!-- Items generated dynamically by JS -->
-      </div>
-
-    </div>
-
-    <!-- CONTROLS -->
-    <div class="controls">
-      <button id="prevBtn" aria-label="Previous">
-        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button id="nextBtn" aria-label="Next">
-        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
     </div>
   </section>
 
@@ -2980,8 +3006,20 @@
         
         item.innerHTML = `
           <div class="carousel-item-inner">
-            <video src="${videoData.url}" loop muted playsinline></video>
+            <video src="${videoData.url}" muted playsinline></video>
             <div class="overlay"></div>
+
+            <!-- Play/Pause Button -->
+            <button class="carousel-play-btn" aria-label="Play Toggle">
+              <!-- Play Icon SVG -->
+              <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              <!-- Pause Icon SVG -->
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+              </svg>
+            </button>
             
             <!-- Mute/Unmute Button -->
             <button class="carousel-mute-btn" aria-label="Mute Toggle">
@@ -3009,9 +3047,65 @@
         track.appendChild(item);
 
         const video = item.querySelector('video');
+        const playBtn = item.querySelector('.carousel-play-btn');
         const muteBtn = item.querySelector('.carousel-mute-btn');
         const progress = item.querySelector('.carousel-scrubber-progress');
         const scrubberBar = item.querySelector('.carousel-scrubber-bar');
+
+        // Play/Pause button click functionality
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isPaused = video.paused;
+          
+          // Synchronize play/pause state across all instances of the same video url
+          const sameVideos = track.querySelectorAll(`video[src="${videoData.url}"]`);
+          sameVideos.forEach(v => {
+            if (isPaused) {
+              v.play().catch(err => console.warn("Play blocked:", err));
+            } else {
+              v.pause();
+            }
+          });
+        });
+
+        // Sync icons with video's play state
+        video.addEventListener('play', () => {
+          const sameVideos = track.querySelectorAll(`video[src="${videoData.url}"]`);
+          sameVideos.forEach(v => {
+            const btn = v.closest('.carousel-item-inner').querySelector('.carousel-play-btn');
+            if (btn) {
+              const playIcon = btn.querySelector('.icon-play');
+              const pauseIcon = btn.querySelector('.icon-pause');
+              if (playIcon && pauseIcon) {
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+              }
+            }
+          });
+        });
+
+        // Sync icons with video's pause state
+        video.addEventListener('pause', () => {
+          const sameVideos = track.querySelectorAll(`video[src="${videoData.url}"]`);
+          sameVideos.forEach(v => {
+            const btn = v.closest('.carousel-item-inner').querySelector('.carousel-play-btn');
+            if (btn) {
+              const playIcon = btn.querySelector('.icon-play');
+              const pauseIcon = btn.querySelector('.icon-pause');
+              if (playIcon && pauseIcon) {
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+              }
+            }
+          });
+        });
+
+        // Auto-advance to next card when video ends (only if this card is currently active)
+        video.addEventListener('ended', () => {
+          if (index === currentIndex) {
+            goToIndex(currentIndex + 1);
+          }
+        });
 
         // Mute button functionality
         muteBtn.addEventListener('click', (e) => {
@@ -3168,7 +3262,7 @@
       let isActualDrag = false;
 
       function dragStart(e) {
-        if (e.target.closest('.controls') || e.target.closest('.carousel-mute-btn') || e.target.closest('.carousel-scrubber-bar')) return;
+        if (e.target.closest('.controls') || e.target.closest('.carousel-mute-btn') || e.target.closest('.carousel-play-btn') || e.target.closest('.carousel-scrubber-bar')) return;
         
         startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         isDragging = true;
