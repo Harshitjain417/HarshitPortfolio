@@ -11,7 +11,7 @@
        🎨 CORE STYLES & LAYOUT
        ========================================== */
     :root {
-      --item-width: 320px;
+      --item-width: 370px;
       --item-gap: 20px;
       --bg-color: #ffffff;
       --text-color: #050505;
@@ -58,13 +58,13 @@
     /* Responsive dimensions */
     @media (max-width: 768px) {
       :root {
-        --item-width: 260px;
+        --item-width: 300px;
         --item-gap: 15px;
       }
     }
     @media (max-width: 480px) {
       :root {
-        --item-width: 75vw;
+        --item-width: 80vw;
         --item-gap: 12px;
       }
     }
@@ -623,7 +623,7 @@
        ========================================== */
     .controls {
       position: absolute;
-      bottom: 5vh;
+      bottom: 40px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -2393,7 +2393,9 @@
         <!-- Items generated dynamically by JS -->
       </div>
 
-      <!-- CONTROLS -->
+    </div>
+
+    <!-- CONTROLS -->
     <div class="controls">
       <button id="prevBtn" aria-label="Previous">
         <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
@@ -2402,7 +2404,6 @@
         <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
       </button>
     </div>
-  </div>
   </section>
 
 
@@ -2886,8 +2887,11 @@
       
       // 2. Navigation Control Function
       function goToIndex(index) {
-        if (index < 0) index = 0;
-        if (index >= domItems.length) index = domItems.length - 1;
+        if (index < 0) {
+          index = domItems.length - 1;
+        } else if (index >= domItems.length) {
+          index = 0;
+        }
         currentIndex = index;
         updateCarousel();
       }
@@ -2917,10 +2921,10 @@
         });
 
         // Update Arrow Button opacities based on boundaries
-        prevBtn.style.opacity = currentIndex === 0 ? "0.3" : "1";
-        prevBtn.style.cursor = currentIndex === 0 ? "not-allowed" : "pointer";
-        nextBtn.style.opacity = currentIndex === domItems.length - 1 ? "0.3" : "1";
-        nextBtn.style.cursor = currentIndex === domItems.length - 1 ? "not-allowed" : "pointer";
+        prevBtn.style.opacity = "1";
+        prevBtn.style.cursor = "pointer";
+        nextBtn.style.opacity = "1";
+        nextBtn.style.cursor = "pointer";
       }
 
       // 4. Implement Drag / Swipe Functionality
@@ -2978,9 +2982,9 @@
         const diffX = currentX - startX;
         
         // Evaluate swipe direction & threshold
-        if (diffX < -dragThreshold && currentIndex < domItems.length - 1) {
+        if (diffX < -dragThreshold) {
           goToIndex(currentIndex + 1);
-        } else if (diffX > dragThreshold && currentIndex > 0) {
+        } else if (diffX > dragThreshold) {
           goToIndex(currentIndex - 1);
         } else {
           goToIndex(currentIndex); // Snap back to center if threshold wasn't met
