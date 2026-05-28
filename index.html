@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harshit Jain | Video Editor & Motion Graphics Artist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Inter:wght@300;400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     /* ==========================================
@@ -2364,6 +2366,246 @@
         padding: 40px 5vw;
       }
     }
+
+    /* ==========================================
+       🎯 INTERACTIVE COMMAND CENTRE (ICC)
+       ========================================== */
+    .icc-wrapper {
+      flex: 1;
+      max-width: 600px;
+      z-index: 10;
+      transform: translateY(-6vh);
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .icc-stage {
+      --icc-font-sans: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --icc-canvas-bg: radial-gradient(circle at center, #ffffff 0%, #f1f3f7 100%);
+      --icc-card-bg: #ffffff;
+      --icc-card-border: 1px solid rgba(226, 232, 240, 0.8);
+      --icc-card-shadow: 0 4px 20px -2px rgba(0,0,0,0.05), 0 2px 8px -1px rgba(0,0,0,0.03);
+      --icc-purple: #7c3aed;
+      --icc-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      --icc-ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+      --icc-transition-speed: 0.75s;
+
+      position: relative;
+      width: 100%;
+      max-width: 560px;
+      aspect-ratio: 16 / 10;
+      max-height: 350px;
+      background: var(--icc-canvas-bg);
+      border-radius: 28px;
+      border: 1px solid rgba(0,0,0,0.06);
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 20px 80px -15px rgba(0,0,0,0.08);
+    }
+
+    .icc-stage::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(
+        500px circle at var(--icc-mouse-x, 50%) var(--icc-mouse-y, 50%),
+        rgba(99, 102, 241, 0.08),
+        transparent 45%
+      );
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .icc-stage:hover::before { opacity: 1; }
+
+    .icc-card-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      perspective: 1000px;
+    }
+
+    .icc-tilt {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+      transition: transform 0.5s var(--icc-ease-fluid);
+    }
+
+    .icc-card {
+      background: var(--icc-card-bg);
+      border: var(--icc-card-border);
+      border-radius: 18px;
+      box-shadow: var(--icc-card-shadow);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      will-change: transform, opacity, box-shadow;
+      transition:
+        transform var(--icc-transition-speed) var(--icc-ease-spring),
+        opacity var(--icc-transition-speed) var(--icc-ease-fluid),
+        box-shadow var(--icc-transition-speed) var(--icc-ease-fluid);
+    }
+
+    .icc-center-card {
+      width: 200px;
+      height: 238px;
+      position: absolute;
+      z-index: 10;
+      transform: translate(-50%, -50%) scale(1);
+      top: 50%;
+      left: 50%;
+      padding: 1.25rem;
+      justify-content: center;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .icc-avatar-wrap {
+      width: 108px;
+      height: 108px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      border: 2px solid rgba(255,255,255,0.9);
+    }
+
+    .icc-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 12%;
+      display: block;
+    }
+
+    .icc-profile-name {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #1a1720;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .icc-outer-card {
+      width: 160px;
+      height: 95px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      padding: 0.85rem;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      gap: 0.35rem;
+    }
+
+    .icc-service-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .icc-highlight { color: var(--icc-purple); }
+
+    .icc-service-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: #94a3b8;
+    }
+
+    .icc-pills-row {
+      display: flex;
+      gap: 5px;
+      margin-top: 0.3rem;
+      justify-content: center;
+    }
+
+    .icc-pill { height: 8px; border-radius: 999px; }
+    .icc-pill-1 { width: 38px; background: rgba(139,92,246,0.35); }
+    .icc-pill-2 { width: 30px; background: rgba(139,92,246,0.22); }
+    .icc-pill-3 { width: 34px; background: rgba(139,92,246,0.15); }
+
+    /* hidden state */
+    .icc-top-left-card    { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
+    .icc-top-right-card   { transform: translate(-50%,-50%) scale(0.7) rotate(15deg); }
+    .icc-bottom-left-card { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
+    .icc-bottom-right-card{ transform: translate(-50%,-50%) scale(0.7) rotate(15deg); }
+
+    /* hover state */
+    .icc-stage:hover .icc-center-card {
+      transform: translate(-50%,-50%) scale(0.96) translateZ(10px);
+      box-shadow: 0 30px 60px -15px rgba(15,23,42,0.08), 0 15px 30px -10px rgba(15,23,42,0.05);
+    }
+    .icc-stage:hover .icc-outer-card {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .icc-stage:hover .icc-top-left-card {
+      transform: translate(calc(-50% - 192px), calc(-50% - 105px)) rotate(-8deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(59,130,246,0.12);
+    }
+    .icc-stage:hover .icc-top-right-card {
+      transform: translate(calc(-50% + 192px), calc(-50% - 105px)) rotate(8deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(139,92,246,0.12);
+    }
+    .icc-stage:hover .icc-bottom-left-card {
+      transform: translate(calc(-50% - 192px), calc(-50% + 105px)) rotate(-4deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(16,185,129,0.12);
+    }
+    .icc-stage:hover .icc-bottom-right-card {
+      transform: translate(calc(-50% + 192px), calc(-50% + 105px)) rotate(5deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(245,158,11,0.12);
+    }
+
+    /* dark theme ICC adjustments */
+    [data-theme="dark"] .icc-stage {
+      --icc-canvas-bg: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1a 100%);
+      --icc-card-bg: #1e1e2e;
+      --icc-card-border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 80px -15px rgba(0,0,0,0.5);
+    }
+    [data-theme="dark"] .icc-profile-name { color: #e2d8f3; }
+    [data-theme="dark"] .icc-service-title { color: #e2e8f0; }
+
+    @media (max-width: 1024px) {
+      .icc-wrapper { transform: translateY(-4vh); }
+    }
+    @media (max-width: 768px) {
+      .icc-wrapper {
+        width: 100%;
+        max-width: 100%;
+        transform: none;
+        justify-content: center;
+      }
+      .icc-stage { max-height: 260px; }
+    }
   </style>
 </head>
 <body>
@@ -2393,14 +2635,48 @@
     </nav>
 
     <div class="hero-content">
-      <div class="hero-left">
-        <h2 class="diagonal-scroll-fade">High-impact SaaS &<br>motion graphics<br>that convert</h2>
-        <p class="hero-subtext diagonal-scroll-fade">Product demos, launch videos, ads, and motion graphics built<br>for SaaS founders who care about clarity, retention,<br>and conversions.</p>
-        <div class="hero-cta-row">
-          <button class="btn-dark" onclick="document.getElementById('carousel-section').scrollIntoView({behavior: 'smooth'})">View My Work</button>
-          <span class="hero-trusted">
-            <span class="status-dot" style="margin-right:10px;"></span> Trusted by <span class="strong-text" style="margin-left:4px;">Global Brands</span>
-          </span>
+      <!-- INTERACTIVE COMMAND CENTRE -->
+      <div class="icc-wrapper">
+        <div class="icc-stage" id="iccStage">
+          <div class="icc-card-wrapper">
+            <div class="icc-tilt" id="iccTilt">
+
+              <!-- CENTER CARD — Profile -->
+              <div class="icc-card icc-center-card">
+                <div class="icc-avatar-wrap">
+                  <img class="icc-avatar" src="My Upscaled.png" alt="Harshit Jain" />
+                </div>
+                <h2 class="icc-profile-name">Harshit Jain</h2>
+              </div>
+
+              <!-- TOP-LEFT CARD -->
+              <div class="icc-card icc-outer-card icc-top-left-card">
+                <h3 class="icc-service-title"><span class="icc-highlight">Content</span> strategy</h3>
+              </div>
+
+              <!-- TOP-RIGHT CARD -->
+              <div class="icc-card icc-outer-card icc-top-right-card">
+                <h3 class="icc-service-title">Full <span class="icc-highlight">Editing</span> Service</h3>
+              </div>
+
+              <!-- BOTTOM-LEFT CARD -->
+              <div class="icc-card icc-outer-card icc-bottom-left-card">
+                <h3 class="icc-service-title"><span class="icc-highlight">SaaS</span> Motion Graphics</h3>
+                <p class="icc-service-subtitle">Scroll stopping animations</p>
+                <div class="icc-pills-row">
+                  <div class="icc-pill icc-pill-1"></div>
+                  <div class="icc-pill icc-pill-2"></div>
+                  <div class="icc-pill icc-pill-3"></div>
+                </div>
+              </div>
+
+              <!-- BOTTOM-RIGHT CARD -->
+              <div class="icc-card icc-outer-card icc-bottom-right-card">
+                <h3 class="icc-service-title"><span class="icc-highlight">Vibe</span> Coding</h3>
+              </div>
+
+            </div>
+          </div>
         </div>
       </div>
 
@@ -4003,6 +4279,37 @@
         btnPlayPause.style.pointerEvents = "none";
       }
     });
+
+    // ==========================================
+    // 🎯 INTERACTIVE COMMAND CENTRE — Mouse Tilt & Ambient Glow
+    // ==========================================
+    (function() {
+      const iccStage = document.getElementById('iccStage');
+      const iccTilt  = document.getElementById('iccTilt');
+      if (!iccStage || !iccTilt) return;
+
+      iccStage.style.setProperty('--icc-mouse-x', '50%');
+      iccStage.style.setProperty('--icc-mouse-y', '50%');
+
+      iccStage.addEventListener('mousemove', (e) => {
+        const rect = iccStage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        iccStage.style.setProperty('--icc-mouse-x', x + 'px');
+        iccStage.style.setProperty('--icc-mouse-y', y + 'px');
+        const cx = rect.width  / 2;
+        const cy = rect.height / 2;
+        const tiltX = (y - cy) / cy * -6;
+        const tiltY = (x - cx) / cx *  6;
+        iccTilt.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      });
+
+      iccStage.addEventListener('mouseleave', () => {
+        iccTilt.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        iccStage.style.setProperty('--icc-mouse-x', '50%');
+        iccStage.style.setProperty('--icc-mouse-y', '50%');
+      });
+    })();
 
   </script>
 </body>
