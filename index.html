@@ -1966,6 +1966,232 @@
         padding: 50px 5vw;
       }
     }
+
+    /* ==========================================
+       📱 IOS VIDEO PLAYER STYLES
+       ========================================== */
+    .ios-player-section {
+      width: 100vw;
+      padding: 80px 5vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: transparent;
+      position: relative;
+      z-index: 6;
+    }
+
+    .ios-player-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* Standalone iPhone Chassis - Clean & Minimal */
+    .iphone-chassis {
+      position: relative;
+      width: 100%;
+      max-width: 425px;
+      aspect-ratio: 425 / 835;
+      height: auto;
+      border-radius: 54px;
+      background-color: #000000;
+      border: 10px solid #000000;
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.08),
+        0 4px 12px rgba(0, 0, 0, 0.04);
+      display: flex;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .iphone-chassis {
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.6),
+        0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    /* Screen Wrapper */
+    .iphone-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0c;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 44px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Portrait Video */
+    .main-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background-color: #000000;
+      border-radius: 14px;
+      z-index: 10;
+      pointer-events: none;
+      box-shadow: 0 1px 2px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Central iOS Play Button Overlay */
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.88);
+      border: none;
+      color: #111827;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
+      transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1.2), opacity 0.2s, background 0.2s;
+      z-index: 15;
+    }
+
+    .play-button svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .play-button .icon-play {
+      transform: translateX(2px); /* Optical centering */
+    }
+
+    .play-button:hover {
+      transform: translate(-50%, -50%) scale(1.08);
+      background: #ffffff;
+    }
+
+    .play-button:active {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    /* Minimalist Progress Scrubber Bar */
+    .mini-scrubber-bar {
+      position: absolute;
+      bottom: 30px;
+      left: 20px;
+      right: 20px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 2px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Show Scrubber & Mute Button on hover */
+    .iphone-screen:hover .mini-scrubber-bar,
+    .iphone-screen:hover .mute-button {
+      opacity: 1;
+    }
+
+    .scrubber-progress {
+      height: 100%;
+      width: 0%;
+      background-color: #ffffff;
+    }
+
+    /* Small Sound Mute/Enable Button */
+    .mute-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.2s, background 0.2s;
+      z-index: 15;
+    }
+
+    .mute-button svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .mute-button:hover {
+      transform: scale(1.08);
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .mute-button:active {
+      transform: scale(0.95);
+    }
+
+    /* Home Indicator Bar */
+    .home-indicator {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 130px;
+      height: 5px;
+      border-radius: 2.5px;
+      background-color: rgba(255, 255, 255, 0.4);
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Responsiveness for iPhone Chassis */
+    @media (max-width: 480px) {
+      .iphone-chassis {
+        border-radius: 36px;
+        border-width: 6px;
+      }
+      .iphone-screen {
+        border-radius: 30px;
+      }
+      .dynamic-island {
+        width: 90px;
+        height: 22px;
+        top: 12px;
+      }
+      .play-button {
+        width: 56px;
+        height: 56px;
+      }
+      .play-button svg {
+        width: 20px;
+        height: 20px;
+      }
+      .ios-player-section {
+        padding: 40px 5vw;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2061,6 +2287,67 @@
       <div class="stat-item" data-static="2x">
         <div class="stat-number">2x</div>
         <div class="stat-label">Avg. conversion boost</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IOS PLAYER SECTION -->
+  <section class="ios-player-section reveal-up" id="mobile-showcase">
+    <div class="reviews-header reveal-up" style="margin-bottom: 40px; text-align: center;">
+      <div class="reviews-pill">
+        <span class="reviews-pill-dot"></span>
+        Mobile showcase
+      </div>
+      <h2>Interactive iOS Player</h2>
+      <p class="reviews-subtext">Experience high-fidelity sound design and motion graphics in a realistic mobile mockup.</p>
+    </div>
+
+    <div class="ios-player-container">
+      <div class="iphone-chassis">
+        <!-- Screen container -->
+        <div class="iphone-screen" id="playerContainer">
+          
+          <!-- Video element -->
+          <video class="main-video" id="videoNode" preload="auto" playsinline loop autoplay muted>
+            <source src="SaaS SFX.mp4" type="video/mp4">
+          </video>
+
+          <!-- Dynamic Island -->
+          <div class="dynamic-island"></div>
+
+          <!-- Small Sound Mute/Enable Button (top right, visible on hover) -->
+          <button class="mute-button" id="btnMuteToggle" aria-label="Mute Toggle">
+            <!-- Unmuted Icon SVG (Sound on) -->
+            <svg class="icon-sound-on" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <!-- Muted Icon SVG (Sound off) -->
+            <svg class="icon-sound-off" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+          </button>
+
+          <!-- Central Sleek Play Button -->
+          <button class="play-button" id="btnPlayPause" aria-label="Play / Pause">
+            <!-- Play Icon SVG -->
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+            <!-- Pause Icon SVG (hidden by default) -->
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+            </svg>
+          </button>
+
+          <!-- Ultra-Sleek Progress Scrubber (visible on hover) -->
+          <div class="mini-scrubber-bar" id="scrubberBar">
+            <div class="scrubber-progress" id="scrubberProgress"></div>
+          </div>
+
+          <!-- Home Indicator Swipe Bar -->
+          <div class="home-indicator"></div>
+
+        </div>
       </div>
     </div>
   </section>
@@ -3153,6 +3440,111 @@
         playBtn.style.transform = 'translate(-50%, -50%) scale(0.4)';
       });
     })();
+
+    // ==========================================
+    // 📱 IOS VIDEO PLAYER INTERACTIVITY
+    // ==========================================
+    document.addEventListener("DOMContentLoaded", () => {
+      const video = document.getElementById("videoNode");
+      const playerContainer = document.getElementById("playerContainer");
+      const btnPlayPause = document.getElementById("btnPlayPause");
+      const iconPlay = btnPlayPause.querySelector(".icon-play");
+      const iconPause = btnPlayPause.querySelector(".icon-pause");
+      const scrubberProgress = document.getElementById("scrubberProgress");
+      const btnMuteToggle = document.getElementById("btnMuteToggle");
+      const iconSoundOn = btnMuteToggle.querySelector(".icon-sound-on");
+      const iconSoundOff = btnMuteToggle.querySelector(".icon-sound-off");
+
+      // Toggle Play / Pause function
+      function togglePlay() {
+        if (video.paused || video.ended) {
+          video.play().catch(err => {
+            console.log("Autoplay policy block, muting and playing: ", err);
+            video.muted = true;
+            updateMuteUI();
+            video.play();
+          });
+        } else {
+          video.pause();
+        }
+      }
+
+      // Toggle Mute function
+      function updateMuteUI() {
+        if (video.muted) {
+          iconSoundOn.style.display = "none";
+          iconSoundOff.style.display = "block";
+        } else {
+          iconSoundOn.style.display = "block";
+          iconSoundOff.style.display = "none";
+        }
+      }
+
+      // Play/Pause event handlers
+      btnPlayPause.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePlay();
+      });
+
+      playerContainer.addEventListener("click", () => {
+        togglePlay();
+      });
+
+      // Mute event handler
+      btnMuteToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        video.muted = !video.muted;
+        updateMuteUI();
+      });
+
+      // Watch video events to show/hide the center play button smoothly
+      video.addEventListener("play", () => {
+        // Hide center play button completely when video is actively running
+        btnPlayPause.style.opacity = "0";
+        btnPlayPause.style.pointerEvents = "none";
+        
+        // Toggle inside icons just in case
+        iconPlay.style.display = "none";
+        iconPause.style.display = "block";
+      });
+
+      video.addEventListener("pause", () => {
+        // Re-reveal center play button when paused
+        btnPlayPause.style.opacity = "1";
+        btnPlayPause.style.pointerEvents = "auto";
+        
+        iconPlay.style.display = "block";
+        iconPause.style.display = "none";
+      });
+
+      video.addEventListener("ended", () => {
+        btnPlayPause.style.opacity = "1";
+        btnPlayPause.style.pointerEvents = "auto";
+        
+        iconPlay.style.display = "block";
+        iconPause.style.display = "none";
+        scrubberProgress.style.width = "0%";
+      });
+
+      // Update Progress Scrubber
+      video.addEventListener("timeupdate", () => {
+        if (!video.duration) return;
+        const percent = (video.currentTime / video.duration) * 100;
+        scrubberProgress.style.width = percent + "%";
+      });
+
+      // On metadata loaded
+      video.addEventListener("loadedmetadata", () => {
+        updateMuteUI();
+      });
+
+      // Initial check on startup (since video has autoplay enabled)
+      updateMuteUI();
+      if (!video.paused) {
+        btnPlayPause.style.opacity = "0";
+        btnPlayPause.style.pointerEvents = "none";
+      }
+    });
 
   </script>
 </body>
