@@ -356,14 +356,20 @@
       bottom: 24px;
       left: 24px;
       right: 24px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.25);
-      border-radius: 2px;
-      overflow: hidden;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      cursor: pointer !important;
+      pointer-events: auto;
       opacity: 0;
       transition: opacity 0.25s ease;
-      z-index: 10;
-      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Hide the follow-cursor button when mouse is over scrubber bar */
+    .vcp-component:has(.mini-scrubber-bar:hover) .vcp-play-overlay-btn {
+      opacity: 0 !important;
+      transition: opacity 0.15s ease !important;
     }
 
     /* Show Scrubber on hover */
@@ -2112,14 +2118,24 @@
       bottom: 30px;
       left: 20px;
       right: 20px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      cursor: pointer !important;
+      pointer-events: auto;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 20;
+    }
+
+    .mini-scrubber-bar::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
       height: 4px;
       background: rgba(255, 255, 255, 0.25);
       border-radius: 2px;
-      overflow: hidden;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      z-index: 10;
-      pointer-events: none;
     }
 
     /* Show Scrubber & Mute Button on hover */
@@ -2129,9 +2145,13 @@
     }
 
     .scrubber-progress {
-      height: 100%;
+      position: absolute;
+      left: 0;
+      height: 4px;
       width: 0%;
       background-color: #ffffff;
+      border-radius: 2px;
+      pointer-events: none;
     }
 
     /* Small Sound Mute/Enable Button */
@@ -3361,7 +3381,7 @@
 
       // Toggle play on overlay button or clicking video area
       component.addEventListener('click', (e) => {
-        if (e.target.closest('#hero-btnMuteToggle') || e.target.closest('#hero-play-btn')) return;
+        if (e.target.closest('#hero-btnMuteToggle') || e.target.closest('#hero-play-btn') || e.target.closest('#hero-scrubberBar')) return;
         togglePlay();
       });
 
@@ -3420,6 +3440,50 @@
       video.addEventListener('ended', () => {
         if (scrubberProgress) scrubberProgress.style.width = "0%";
       });
+
+      // Seeking logic
+      const scrubberBar = document.getElementById('hero-scrubberBar');
+      let isDragging = false;
+
+      function seek(e) {
+        if (!video.duration) return;
+        const rect = scrubberBar.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        let pos = (clientX - rect.left) / rect.width;
+        pos = Math.max(0, Math.min(1, pos));
+        video.currentTime = pos * video.duration;
+        if (scrubberProgress) scrubberProgress.style.width = (pos * 100) + "%";
+      }
+
+      if (scrubberBar) {
+        scrubberBar.addEventListener('mousedown', (e) => {
+          e.stopPropagation();
+          isDragging = true;
+          seek(e);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (isDragging) seek(e);
+        });
+
+        window.addEventListener('mouseup', () => {
+          isDragging = false;
+        });
+
+        scrubberBar.addEventListener('touchstart', (e) => {
+          e.stopPropagation();
+          isDragging = true;
+          seek(e);
+        }, { passive: true });
+
+        window.addEventListener('touchmove', (e) => {
+          if (isDragging) seek(e);
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => {
+          isDragging = false;
+        });
+      }
 
       // On metadata loaded
       video.addEventListener('loadedmetadata', () => {
@@ -3539,6 +3603,50 @@
         const percent = (video.currentTime / video.duration) * 100;
         scrubberProgress.style.width = percent + "%";
       });
+
+      // Seeking logic
+      const scrubberBar = document.getElementById("scrubberBar");
+      let isDragging = false;
+
+      function seek(e) {
+        if (!video.duration) return;
+        const rect = scrubberBar.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        let pos = (clientX - rect.left) / rect.width;
+        pos = Math.max(0, Math.min(1, pos));
+        video.currentTime = pos * video.duration;
+        scrubberProgress.style.width = (pos * 100) + "%";
+      }
+
+      if (scrubberBar) {
+        scrubberBar.addEventListener("mousedown", (e) => {
+          e.stopPropagation();
+          isDragging = true;
+          seek(e);
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (isDragging) seek(e);
+        });
+
+        window.addEventListener("mouseup", () => {
+          isDragging = false;
+        });
+
+        scrubberBar.addEventListener("touchstart", (e) => {
+          e.stopPropagation();
+          isDragging = true;
+          seek(e);
+        }, { passive: true });
+
+        window.addEventListener("touchmove", (e) => {
+          if (isDragging) seek(e);
+        }, { passive: true });
+
+        window.addEventListener("touchend", () => {
+          isDragging = false;
+        });
+      }
 
       // On metadata loaded
       video.addEventListener("loadedmetadata", () => {
