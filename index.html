@@ -2939,7 +2939,6 @@
       
       let currentIndex = 5;
       let isDragging = false;
-      let isTransitioning = false;
       let startX = 0;
       let startTransform = 0;
       let domItems = [];
@@ -3048,10 +3047,28 @@
       
       // 2. Navigation Control Function
       function goToIndex(index) {
-        if (isTransitioning) return;
         if (index === currentIndex) return;
-        isTransitioning = true;
-        currentIndex = index;
+        
+        if (index > currentIndex) {
+          // Sliding Next: check if we exceed the right boundary
+          if (index >= 8) {
+            currentIndex = currentIndex - 5;
+            updateCarousel(false); // snap back to equivalent slide in middle set instantly
+            currentIndex = index - 5;
+          } else {
+            currentIndex = index;
+          }
+        } else if (index < currentIndex) {
+          // Sliding Prev: check if we exceed the left boundary
+          if (index <= 2) {
+            currentIndex = currentIndex + 5;
+            updateCarousel(false); // snap back to equivalent slide in middle set instantly
+            currentIndex = index + 5;
+          } else {
+            currentIndex = index;
+          }
+        }
+        
         updateCarousel(true);
       }
       
@@ -3120,21 +3137,6 @@
         }
       }
 
-      // Transitionend event listener for endless loop snapping
-      track.addEventListener('transitionend', (e) => {
-        // Only run snapping when the track itself finishes its transform transition
-        if (e.target !== track || e.propertyName !== 'transform') return;
-
-        if (currentIndex >= 8) {
-          currentIndex = currentIndex - 5;
-          updateCarousel(false);
-        } else if (currentIndex <= 2) {
-          currentIndex = currentIndex + 5;
-          updateCarousel(false);
-        }
-        isTransitioning = false; // Release transition lock
-      });
-
       // 4. Implement Drag / Swipe Functionality
       track.addEventListener('mousedown', dragStart);
       track.addEventListener('touchstart', dragStart, {passive: true});
@@ -3150,7 +3152,6 @@
       let isActualDrag = false;
 
       function dragStart(e) {
-        if (isTransitioning) return;
         if (e.target.closest('.controls') || e.target.closest('.carousel-mute-btn') || e.target.closest('.carousel-scrubber-bar')) return;
         
         startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
@@ -3196,8 +3197,7 @@
         } else if (diffX > dragThreshold) {
           goToIndex(currentIndex - 1);
         } else {
-          // Snapping back: force transition and lock
-          isTransitioning = true;
+          // Snapping back: force transition back to current active slide
           updateCarousel(true);
         }
       }
