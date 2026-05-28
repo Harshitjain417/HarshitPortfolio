@@ -2912,12 +2912,7 @@
           item.classList.toggle('active', isActive);
           
           const video = item.querySelector('video');
-          if (isActive) {
-            video.currentTime = 0; // Cinematic fresh start on center
-            video.play().catch(err => console.warn("Autoplay blocked by browser:", err));
-          } else {
-            video.pause();
-          }
+          video.play().catch(err => console.warn("Autoplay blocked by browser:", err));
         });
 
         // Update Arrow Button opacities based on boundaries
