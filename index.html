@@ -2933,14 +2933,18 @@
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       
-      let currentIndex = 7;
+      let currentIndex = 5;
       let isDragging = false;
       let startX = 0;
       let startTransform = 0;
       let domItems = [];
 
-      // Repeat the VIDEOS array 3 times to build the infinite track
-      const repeatedVideos = [...VIDEOS, ...VIDEOS, ...VIDEOS];
+      // Clone 3 items at the start, and 3 items at the end to make 11 elements
+      const repeatedVideos = [
+        VIDEOS[2], VIDEOS[3], VIDEOS[4], // Prepended clones (3)
+        ...VIDEOS,                        // Original slides (5)
+        VIDEOS[0], VIDEOS[1], VIDEOS[2]  // Appended clones (3)
+      ];
 
       // 1. Build DOM Elements from the Array
       repeatedVideos.forEach((videoData, index) => {
@@ -3092,11 +3096,14 @@
       }
 
       // Transitionend event listener for endless loop snapping
-      track.addEventListener('transitionend', () => {
-        if (currentIndex >= 10) {
+      track.addEventListener('transitionend', (e) => {
+        // Only run snapping when the track itself finishes its transform transition
+        if (e.target !== track || e.propertyName !== 'transform') return;
+
+        if (currentIndex >= 8) {
           currentIndex = currentIndex - 5;
           updateCarousel(false);
-        } else if (currentIndex <= 4) {
+        } else if (currentIndex <= 2) {
           currentIndex = currentIndex + 5;
           updateCarousel(false);
         }
