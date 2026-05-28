@@ -2939,6 +2939,7 @@
       
       let currentIndex = 5;
       let isDragging = false;
+      let isTransitioning = false;
       let startX = 0;
       let startTransform = 0;
       let domItems = [];
@@ -3047,6 +3048,9 @@
       
       // 2. Navigation Control Function
       function goToIndex(index) {
+        if (isTransitioning) return;
+        if (index === currentIndex) return;
+        isTransitioning = true;
         currentIndex = index;
         updateCarousel(true);
       }
@@ -3077,7 +3081,14 @@
           item.classList.toggle('active', isActive);
           
           const video = item.querySelector('video');
-          video.play().catch(err => console.warn("Autoplay blocked by browser:", err));
+          
+          // Only play videos that are in or near the viewport (active, or 1-2 slides away)
+          const isNearViewport = Math.abs(i - currentIndex) <= 2;
+          if (isNearViewport) {
+            video.play().catch(err => console.warn("Autoplay blocked by browser:", err));
+          } else {
+            video.pause();
+          }
 
           // Auto-mute inactive slides to prevent audio overlap/clutter
           if (!isActive) {
@@ -3121,6 +3132,7 @@
           currentIndex = currentIndex + 5;
           updateCarousel(false);
         }
+        isTransitioning = false; // Release transition lock
       });
 
       // 4. Implement Drag / Swipe Functionality
@@ -3138,6 +3150,7 @@
       let isActualDrag = false;
 
       function dragStart(e) {
+        if (isTransitioning) return;
         if (e.target.closest('.controls') || e.target.closest('.carousel-mute-btn') || e.target.closest('.carousel-scrubber-bar')) return;
         
         startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
@@ -3183,7 +3196,9 @@
         } else if (diffX > dragThreshold) {
           goToIndex(currentIndex - 1);
         } else {
-          goToIndex(currentIndex); // Snap back to center if threshold wasn't met
+          // Snapping back: force transition and lock
+          isTransitioning = true;
+          updateCarousel(true);
         }
       }
 
