@@ -2464,7 +2464,6 @@
       overflow: hidden;
       flex-shrink: 0;
       box-shadow: 0 6px 28px rgba(0,0,0,0.22);
-      border: 3px solid rgba(255,255,255,0.9);
     }
 
     .icc-avatar {
@@ -2567,11 +2566,11 @@
 
     /* dark theme ICC adjustments */
     [data-theme="dark"] .icc-stage {
-      --icc-card-bg: #1e1e2e;
-      --icc-card-border: 1px solid rgba(255,255,255,0.08);
+      --icc-card-bg: var(--card-bg);
+      --icc-card-border: 1px solid var(--border-color);
       --icc-card-shadow: 0 4px 24px -2px rgba(0,0,0,0.4), 0 2px 10px -1px rgba(0,0,0,0.3);
     }
-    [data-theme="dark"] .icc-profile-name { color: #e2d8f3; }
+    [data-theme="dark"] .icc-profile-name { color: #ffffff; }
     [data-theme="dark"] .icc-service-title { color: #e2e8f0; }
 
     @media (max-width: 1024px) {
