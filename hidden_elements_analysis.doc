@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hidden Elements Analysis Report</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333333;
+        line-height: 1.5;
+        padding: 40px;
+    }
+    h1 {
+        font-size: 24pt;
+        color: #1B365D;
+        border-bottom: 2px solid #1B365D;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    h2 {
+        font-size: 16pt;
+        color: #2E5B88;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #CCCCCC;
+        padding-bottom: 5px;
+    }
+    h3 {
+        font-size: 12pt;
+        color: #4A779D;
+        margin-top: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 25px;
+    }
+    th, td {
+        border: 1px solid #DDDDDD;
+        padding: 10px;
+        text-align: left;
+        font-size: 10pt;
+    }
+    th {
+        background-color: #F2F5F8;
+        font-weight: bold;
+        color: #1B365D;
+    }
+    .line-number {
+        font-weight: bold;
+        color: #888888;
+        width: 80px;
+    }
+    .code-block {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #F8F9FA;
+        border: 1px solid #E9ECEF;
+        padding: 10px;
+        font-size: 9.5pt;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    .meta-info {
+        font-size: 10pt;
+        color: #666666;
+        margin-bottom: 30px;
+    }
+</style>
+</head>
+<body>
+
+<h1>Hidden Elements Analysis Report</h1>
+<div class="meta-info">
+    <strong>Date of Analysis:</strong> 28/5/2026, 9:31:59 pm<br>
+    <strong>Project Directory:</strong> c:\Users\Acer\Desktop\premium Portfolio<br>
+    <strong>Scope:</strong> Full scan of index.html and showreel-player.html for commented-out markup, CSS hidden classes, and display:none inline styles.
+</div>
+
+<p>This report documents all content, sections, features, and variables that have been hidden or disabled within the source code. This includes elements hidden by CSS style rules, explicit inline display overrides, and blocks of HTML code that have been commented out.</p>
+
+<h2>File: index.html</h2><h3>1. Explicitly Hidden Elements (Inline styles: display: none)</h3><table>
+            <tr>
+                <th class="line-number">Line</th>
+                <th>Hidden Element & inline Style Attributes</th>
+            </tr><tr>
+                <td class="line-number">Line 2416</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display:none;&quot;&gt;&lt;path d=&quot;M6 19h4V5H6v14zm8-14v14h4V5h-4z&quot;/&gt;&lt;/svg&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2421</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-sound-on&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2483</td>
+                <td><div class="code-block">&lt;section class=&quot;ios-player-section reveal-up&quot; id=&quot;mobile-showcase&quot; style=&quot;display: none !important;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2513</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-sound-off&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2525</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2545</td>
+                <td><div class="code-block">&lt;section class=&quot;contact-section&quot; id=&quot;contact&quot; style=&quot;display: none !important;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2741</td>
+                <td><div class="code-block">&lt;section class=&quot;faq-section&quot; id=&quot;faq&quot; style=&quot;display: none !important;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 2744</td>
+                <td><div class="code-block">&lt;div style=&quot;display: none;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 3026</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 3034</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-sound-on&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
+            </tr></table><h3>2. CSS Rules set to Hide Elements (Selector: display: none)</h3><table>
+            <tr>
+                <th class="line-number">Line</th>
+                <th>Target Class/Selector</th>
+                <th>CSS Rule Declaration</th>
+            </tr><tr>
+                <td class="line-number">Line 445</td>
+                <td><strong>.nav-links</strong></td>
+                <td><div class="code-block">.nav-links { display: none ... }</div></td>
+            </tr><tr>
+                <td class="line-number">Line 610</td>
+                <td><strong>.caption</strong></td>
+                <td><div class="code-block">.caption {
+      display: none ... }</div></td>
+            </tr><tr>
+                <td class="line-number">Line 833</td>
+                <td><strong>.theme-toggle .sun-icon</strong></td>
+                <td><div class="code-block">.theme-toggle .sun-icon { display: none ... }</div></td>
+            </tr><tr>
+                <td class="line-number">Line 836</td>
+                <td><strong>.theme-toggle .moon-icon</strong></td>
+                <td><div class="code-block">.theme-toggle .moon-icon { display: none ... }</div></td>
+            </tr><tr>
+                <td class="line-number">Line 1724</td>
+                <td><strong>.review-star-error</strong></td>
+                <td><div class="code-block">.review-star-error {
+      font-size: 12px;
+      color: #ff3b30;
+      margin-top: 6px;
+      display: none ... }</div></td>
+            </tr><tr>
+                <td class="line-number">Line 1762</td>
+                <td><strong>.review-form-error</strong></td>
+                <td><div class="code-block">.review-form-error {
+      font-size: 13px;
+      color: #ff3b30;
+      margin-top: 10px;
+      text-align: center;
+      display: none ... }</div></td>
+            </tr><tr>
+                <td class="line-number">Line 1800</td>
+                <td><strong>.marquee-row-2</strong></td>
+                <td><div class="code-block">.marquee-row-2 {
+        display: none ... }</div></td>
+            </tr></table><h3>3. Commented-out HTML Markup & Content Blocks</h3><p>No significant commented-out HTML code blocks found.</p><h2>File: showreel-player.html</h2><h3>1. Explicitly Hidden Elements (Inline styles: display: none)</h3><table>
+            <tr>
+                <th class="line-number">Line</th>
+                <th>Hidden Element & inline Style Attributes</th>
+            </tr><tr>
+                <td class="line-number">Line 254</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display:none;&quot;&gt;</div></td>
+            </tr><tr>
+                <td class="line-number">Line 262</td>
+                <td><div class="code-block">&lt;svg class=&quot;icon-sound-on&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
+            </tr></table><h3>2. CSS Rules set to Hide Elements (Selector: display: none)</h3><p>No CSS rules found set to hide selectors globally.</p><h3>3. Commented-out HTML Markup & Content Blocks</h3><p>No significant commented-out HTML code blocks found.</p>
+</body>
+</html>
