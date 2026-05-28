@@ -1460,7 +1460,7 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      width: 100px;
+      width: 60px;
       z-index: 2;
       pointer-events: none;
     }
@@ -1591,28 +1591,35 @@
       color: rgba(255,255,255,0.45);
     }
 
-    /* Reviews Divider */
-    .reviews-divider {
-      width: 80%;
-      max-width: 500px;
-      height: 1px;
-      background: rgba(255,255,255,0.08);
-      margin: 60px auto;
+    /* Reviews Split Grid Layout */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+      width: 100%;
     }
 
-    :root .reviews-divider {
-      background: rgba(0,0,0,0.08);
+    .reviews-marquee-column {
+      width: 100%;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    [data-theme="dark"] .reviews-divider {
-      background: rgba(255,255,255,0.08);
+
+    .reviews-form-column {
+      width: 100%;
+    }
+
+    .reviews-form-column .review-form-header {
+      text-align: left;
+      margin-bottom: 24px;
     }
 
     /* Review Form */
-    .review-form-header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
     .review-form-header h3 {
       font-size: 2rem;
       font-weight: 600;
@@ -1628,8 +1635,8 @@
     }
 
     .review-form-card {
-      max-width: 500px;
-      margin: 0 auto;
+      width: 100%;
+      max-width: 100%;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 20px;
@@ -1793,6 +1800,20 @@
     }
 
     /* Reviews Responsive */
+    @media (max-width: 992px) {
+      .reviews-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .reviews-form-column .review-form-header {
+        text-align: center;
+      }
+      .review-form-card {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+    }
+
     @media (max-width: 768px) {
       .reviews-section {
         padding: 60px 5vw 50px;
@@ -2592,65 +2613,70 @@
       <p class="reviews-subtext">Real results from real clients</p>
     </div>
 
-    <!-- Marquee Row 1 - scrolls LEFT -->
-    <div class="marquee-container">
-      <div class="marquee-track marquee-track-row1" id="marqueeRow1">
-        <!-- Cards injected by JS -->
-      </div>
-    </div>
-
-    <!-- Marquee Row 2 - scrolls RIGHT -->
-    <div class="marquee-container marquee-row-2">
-      <div class="marquee-track marquee-track-row2" id="marqueeRow2">
-        <!-- Cards injected by JS -->
-      </div>
-    </div>
-
-    <!-- Divider -->
-    <div class="reviews-divider"></div>
-
-    <!-- Review Submit Form -->
-    <div class="review-form-header reveal-up">
-      <div class="reviews-pill">
-        <span class="reviews-pill-dot"></span>
-        Leave a Review
-      </div>
-      <h3>Share Your Experience</h3>
-      <p class="review-form-subtext">Your feedback means the world</p>
-    </div>
-
-    <div class="review-form-card reveal-up">
-      <form id="reviewForm" novalidate>
-        <div class="review-form-group">
-          <label class="review-form-label" for="reviewName">Full Name</label>
-          <input type="text" id="reviewName" class="review-form-input" placeholder="Your name" required>
-        </div>
-
-        <div class="review-form-group">
-          <label class="review-form-label" for="reviewCompany">Company / Role</label>
-          <input type="text" id="reviewCompany" class="review-form-input" placeholder="Founder @ YourCompany">
-        </div>
-
-        <div class="review-form-group">
-          <label class="review-form-label">Your Rating</label>
-          <div class="star-rating-row" id="starRatingRow">
-            <button type="button" class="star-rating-btn" data-star="1">★</button>
-            <button type="button" class="star-rating-btn" data-star="2">★</button>
-            <button type="button" class="star-rating-btn" data-star="3">★</button>
-            <button type="button" class="star-rating-btn" data-star="4">★</button>
-            <button type="button" class="star-rating-btn" data-star="5">★</button>
+    <div class="reviews-grid">
+      <!-- Left Column: Testimonial Marquees -->
+      <div class="reviews-marquee-column">
+        <!-- Marquee Row 1 - scrolls LEFT -->
+        <div class="marquee-container">
+          <div class="marquee-track marquee-track-row1" id="marqueeRow1">
+            <!-- Cards injected by JS -->
           </div>
-          <div class="review-star-error" id="starError">Please select a rating</div>
         </div>
 
-        <div class="review-form-group">
-          <label class="review-form-label" for="reviewMessage">Your Review</label>
-          <textarea id="reviewMessage" class="review-form-textarea" placeholder="Share your experience working with Harshit..." required></textarea>
+        <!-- Marquee Row 2 - scrolls RIGHT -->
+        <div class="marquee-container marquee-row-2">
+          <div class="marquee-track marquee-track-row2" id="marqueeRow2">
+            <!-- Cards injected by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Share Your Experience Form -->
+      <div class="reviews-form-column">
+        <!-- Review Submit Form -->
+        <div class="review-form-header reveal-up">
+          <div class="reviews-pill">
+            <span class="reviews-pill-dot"></span>
+            Leave a Review
+          </div>
+          <h3>Share Your Experience</h3>
+          <p class="review-form-subtext">Your feedback means the world</p>
         </div>
 
-        <button type="submit" class="review-submit-btn" id="reviewSubmitBtn">Submit Review</button>
-        <div class="review-form-error" id="reviewFormError">Something went wrong. Please try again.</div>
-      </form>
+        <div class="review-form-card reveal-up">
+          <form id="reviewForm" novalidate>
+            <div class="review-form-group">
+              <label class="review-form-label" for="reviewName">Full Name</label>
+              <input type="text" id="reviewName" class="review-form-input" placeholder="Your name" required>
+            </div>
+
+            <div class="review-form-group">
+              <label class="review-form-label" for="reviewCompany">Company / Role</label>
+              <input type="text" id="reviewCompany" class="review-form-input" placeholder="Founder @ YourCompany">
+            </div>
+
+            <div class="review-form-group">
+              <label class="review-form-label">Your Rating</label>
+              <div class="star-rating-row" id="starRatingRow">
+                <button type="button" class="star-rating-btn" data-star="1">★</button>
+                <button type="button" class="star-rating-btn" data-star="2">★</button>
+                <button type="button" class="star-rating-btn" data-star="3">★</button>
+                <button type="button" class="star-rating-btn" data-star="4">★</button>
+                <button type="button" class="star-rating-btn" data-star="5">★</button>
+              </div>
+              <div class="review-star-error" id="starError">Please select a rating</div>
+            </div>
+
+            <div class="review-form-group">
+              <label class="review-form-label" for="reviewMessage">Your Review</label>
+              <textarea id="reviewMessage" class="review-form-textarea" placeholder="Share your experience working with Harshit..." required></textarea>
+            </div>
+
+            <button type="submit" class="review-submit-btn" id="reviewSubmitBtn">Submit Review</button>
+            <div class="review-form-error" id="reviewFormError">Something went wrong. Please try again.</div>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3511,13 +3537,22 @@
       function renderMarqueeRows(reviews) {
         const row1El = document.getElementById('marqueeRow1');
         const row2El = document.getElementById('marqueeRow2');
+        if (!row1El || !row2El) return;
+
+        // Pad reviews if there are too few (e.g. less than 8), to ensure infinite smooth marquee looping without snapping
+        let displayReviews = [...reviews];
+        if (displayReviews.length > 0) {
+          while (displayReviews.length < 8) {
+            displayReviews = displayReviews.concat(reviews);
+          }
+        }
 
         // Row 1: normal order, duplicated
-        const row1Cards = reviews.map(r => createReviewCardHTML(r)).join('');
+        const row1Cards = displayReviews.map(r => createReviewCardHTML(r)).join('');
         row1El.innerHTML = row1Cards + row1Cards;
 
         // Row 2: reversed order, duplicated
-        const reversed = [...reviews].reverse();
+        const reversed = [...displayReviews].reverse();
         const row2Cards = reversed.map(r => createReviewCardHTML(r)).join('');
         row2El.innerHTML = row2Cards + row2Cards;
       }
