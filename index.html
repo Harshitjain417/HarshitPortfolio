@@ -2933,23 +2933,24 @@
       const prevBtn = document.getElementById('prevBtn');
       const nextBtn = document.getElementById('nextBtn');
       
-      let currentIndex = 2;
+      let currentIndex = 7;
       let isDragging = false;
       let startX = 0;
       let startTransform = 0;
       let domItems = [];
 
+      // Repeat the VIDEOS array 3 times to build the infinite track
+      const repeatedVideos = [...VIDEOS, ...VIDEOS, ...VIDEOS];
+
       // 1. Build DOM Elements from the Array
-      VIDEOS.forEach((videoData, index) => {
+      repeatedVideos.forEach((videoData, index) => {
         const item = document.createElement('div');
         item.className = 'carousel-item';
         
         // Handle click event (trigger only real clicks, ignore drags)
         item.addEventListener('click', () => {
           if (!document.body.classList.contains('is-dragging')) {
-            const currentDOMItems = Array.from(track.children);
-            const clickIndex = currentDOMItems.indexOf(item);
-            goToIndex(clickIndex);
+            goToIndex(index);
           }
         });
         
@@ -2992,15 +2993,24 @@
         muteBtn.addEventListener('click', (e) => {
           e.stopPropagation();
           video.muted = !video.muted;
-          const soundOn = muteBtn.querySelector('.icon-sound-on');
-          const soundOff = muteBtn.querySelector('.icon-sound-off');
-          if (video.muted) {
-            soundOn.style.display = 'none';
-            soundOff.style.display = 'block';
-          } else {
-            soundOn.style.display = 'block';
-            soundOff.style.display = 'none';
-          }
+          
+          // Synchronize mute state across all instances of the same video url
+          const sameVideos = track.querySelectorAll(`video[src="${videoData.url}"]`);
+          sameVideos.forEach(v => {
+            v.muted = video.muted;
+            const btn = v.closest('.carousel-item-inner').querySelector('.carousel-mute-btn');
+            if (btn) {
+              const soundOn = btn.querySelector('.icon-sound-on');
+              const soundOff = btn.querySelector('.icon-sound-off');
+              if (video.muted) {
+                soundOn.style.display = 'none';
+                soundOff.style.display = 'block';
+              } else {
+                soundOn.style.display = 'block';
+                soundOff.style.display = 'none';
+              }
+            }
+          });
         });
 
         // Timeupdate event to update scrubber progress
@@ -3018,7 +3028,11 @@
           const clickX = e.clientX - rect.left;
           const pct = Math.max(0, Math.min(1, clickX / rect.width));
           if (video.duration) {
-            video.currentTime = pct * video.duration;
+            const newTime = pct * video.duration;
+            const sameVideos = track.querySelectorAll(`video[src="${videoData.url}"]`);
+            sameVideos.forEach(v => {
+              v.currentTime = newTime;
+            });
           }
         });
       });
@@ -3079,20 +3093,11 @@
 
       // Transitionend event listener for endless loop snapping
       track.addEventListener('transitionend', () => {
-        const currentDOMItems = track.querySelectorAll('.carousel-item');
-        if (currentIndex > 2) {
-          const shiftCount = currentIndex - 2;
-          for (let i = 0; i < shiftCount; i++) {
-            track.appendChild(track.firstElementChild);
-          }
-          currentIndex = 2;
+        if (currentIndex >= 10) {
+          currentIndex = currentIndex - 5;
           updateCarousel(false);
-        } else if (currentIndex < 2) {
-          const shiftCount = 2 - currentIndex;
-          for (let i = 0; i < shiftCount; i++) {
-            track.insertBefore(track.lastElementChild, track.firstElementChild);
-          }
-          currentIndex = 2;
+        } else if (currentIndex <= 4) {
+          currentIndex = currentIndex + 5;
           updateCarousel(false);
         }
       });
