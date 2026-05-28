@@ -299,58 +299,75 @@
 
     .vcp-play-overlay-btn.playing { opacity: 0; }
     .vcp-component:hover .vcp-play-overlay-btn.playing { opacity: 0.9; }
-    .vcp-component:has(#hero-volume-controls:hover) .vcp-play-overlay-btn {
+    /* Hide the follow-cursor button when mouse is over mute button */
+    .vcp-component:has(.vcp-mute-btn:hover) .vcp-play-overlay-btn {
       opacity: 0 !important;
       transition: opacity 0.15s ease !important;
     }
 
-    /* Volume Controls */
-    .vcp-volume-controls {
+    /* Small Sound Mute/Enable Button */
+    .vcp-mute-btn {
       position: absolute;
-      z-index: 10;
+      top: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #ffffff;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 8px;
-      background: rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,255,255,0.15);
-      padding: 12px;
-      border-radius: 100px;
-      color: #fff;
-      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-      backdrop-filter: blur(12px);
+      cursor: pointer !important;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.2s, background 0.2s;
+      z-index: 15;
+    }
+
+    .vcp-mute-btn * {
       cursor: pointer !important;
     }
 
-    .vcp-volume-controls, .vcp-volume-controls * { cursor: pointer !important; }
-    .vcp-volume-controls.top-right { top: 24px; right: 24px; }
-
-    .vcp-mute-btn {
-      background: none; border: none; color: inherit;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      padding: 0; border-radius: 50%;
-      width: 32px; height: 32px;
-      transition: background-color 0.2s;
+    .vcp-mute-btn svg {
+      width: 18px;
+      height: 18px;
     }
-    .vcp-mute-btn:hover { background: rgba(255,255,255,0.1); }
 
-    .vcp-volume-slider-wrapper {
-      width: 0; overflow: hidden;
-      transition: width 0.3s cubic-bezier(0.25,1,0.5,1);
-      display: flex; align-items: center;
+    .vcp-mute-btn:hover {
+      transform: scale(1.08);
+      background: rgba(0, 0, 0, 0.7);
     }
-    .vcp-volume-controls:hover .vcp-volume-slider-wrapper { width: 80px; margin-right: 4px; }
 
-    .vcp-volume-slider {
-      -webkit-appearance: none; appearance: none;
-      width: 100%; height: 4px;
+    .vcp-mute-btn:active {
+      transform: scale(0.95);
+    }
+
+    .vcp-component:hover .vcp-mute-btn {
+      opacity: 1;
+    }
+
+    /* Minimalist Progress Scrubber Bar */
+    .vcp-component .mini-scrubber-bar {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      right: 24px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.25);
       border-radius: 2px;
-      background: rgba(255,255,255,0.25); outline: none;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 10;
+      pointer-events: none;
     }
-    .vcp-volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none; appearance: none;
-      width: 10px; height: 10px;
-      border-radius: 50%; background: #fff; cursor: pointer;
+
+    /* Show Scrubber on hover */
+    .vcp-component:hover .mini-scrubber-bar {
+      opacity: 1;
     }
 
     /* Floating badge below the player */
@@ -2243,26 +2260,21 @@
             <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
           </button>
-          <!-- Mute / Volume controls -->
-          <div class="vcp-volume-controls top-right" id="hero-volume-controls">
-            <button class="vcp-mute-btn" id="hero-mute-btn" aria-label="Toggle Mute">
-              <svg class="icon-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <line x1="23" y1="9" x2="17" y2="15"></line>
-                <line x1="17" y1="9" x2="23" y2="15"></line>
-              </svg>
-              <svg class="icon-volume-low" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              </svg>
-              <svg class="icon-volume-high" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-              </svg>
-            </button>
-            <div class="vcp-volume-slider-wrapper">
-              <input type="range" class="vcp-volume-slider" id="hero-vol-slider" min="0" max="1" step="0.05" value="0.8" aria-label="Volume">
-            </div>
+          <!-- Small Sound Mute/Enable Button (top right, visible on hover) -->
+          <button class="vcp-mute-btn" id="hero-btnMuteToggle" aria-label="Mute Toggle">
+            <!-- Unmuted Icon SVG (Sound on) -->
+            <svg class="icon-sound-on" viewBox="0 0 24 24" fill="currentColor" style="display: none;">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <!-- Muted Icon SVG (Sound off) -->
+            <svg class="icon-sound-off" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.21.05-.42.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+          </button>
+
+          <!-- Ultra-Sleek Progress Scrubber (visible on hover) -->
+          <div class="mini-scrubber-bar" id="hero-scrubberBar">
+            <div class="scrubber-progress" id="hero-scrubberProgress"></div>
           </div>
         </div>
       </div>
@@ -3334,37 +3346,28 @@
     (function() {
       const video     = document.getElementById('hero-video');
       const playBtn   = document.getElementById('hero-play-btn');
-      const muteBtn   = document.getElementById('hero-mute-btn');
-      const volSlider = document.getElementById('hero-vol-slider');
+      const btnMuteToggle = document.getElementById('hero-btnMuteToggle');
+      const iconSoundOn = btnMuteToggle ? btnMuteToggle.querySelector('.icon-sound-on') : null;
+      const iconSoundOff = btnMuteToggle ? btnMuteToggle.querySelector('.icon-sound-off') : null;
+      const scrubberProgress = document.getElementById('hero-scrubberProgress');
       const component = document.getElementById('hero-showreel');
 
-      if (!video || !playBtn || !muteBtn || !volSlider || !component) return;
+      if (!video || !playBtn || !btnMuteToggle || !component) return;
 
-      let isMuted     = true;
-      let savedVolume = 0.8;
-
-      video.volume = savedVolume;
-      updateVolumeUI();
+      // Set default initial volume state
+      video.muted = true;
+      updateMuteUI();
 
       // Toggle play on overlay button or clicking video area
       component.addEventListener('click', (e) => {
-        if (e.target.closest('#hero-volume-controls') || e.target.closest('#hero-play-btn')) return;
+        if (e.target.closest('#hero-btnMuteToggle') || e.target.closest('#hero-play-btn')) return;
         togglePlay();
       });
 
-      muteBtn.addEventListener('click', () => {
-        isMuted = !isMuted;
-        video.muted = isMuted;
-        updateVolumeUI();
-      });
-
-      volSlider.addEventListener('input', (e) => {
-        const val   = parseFloat(e.target.value);
-        savedVolume = val;
-        video.volume = val;
-        isMuted      = val === 0;
-        video.muted  = isMuted;
-        updateVolumeUI();
+      btnMuteToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        video.muted = !video.muted;
+        updateMuteUI();
       });
 
       video.addEventListener('play',  updatePlayStateUI);
@@ -3374,8 +3377,7 @@
         if (video.paused) {
           video.play().catch(() => {
             video.muted = true;
-            isMuted = true;
-            updateVolumeUI();
+            updateMuteUI();
             video.play();
           });
         } else {
@@ -3397,27 +3399,31 @@
         }
       }
 
-      function updateVolumeUI() {
-        const mutedIcon = muteBtn.querySelector('.icon-muted');
-        const lowIcon   = muteBtn.querySelector('.icon-volume-low');
-        const highIcon  = muteBtn.querySelector('.icon-volume-high');
-        if (isMuted || video.volume === 0) {
-          mutedIcon.style.display = 'block';
-          lowIcon.style.display   = 'none';
-          highIcon.style.display  = 'none';
-          volSlider.value = 0;
-        } else if (video.volume < 0.5) {
-          mutedIcon.style.display = 'none';
-          lowIcon.style.display   = 'block';
-          highIcon.style.display  = 'none';
-          volSlider.value = video.volume;
+      function updateMuteUI() {
+        if (video.muted) {
+          iconSoundOn.style.display = "none";
+          iconSoundOff.style.display = "block";
         } else {
-          mutedIcon.style.display = 'none';
-          lowIcon.style.display   = 'none';
-          highIcon.style.display  = 'block';
-          volSlider.value = video.volume;
+          iconSoundOn.style.display = "block";
+          iconSoundOff.style.display = "none";
         }
       }
+
+      // Update Progress Scrubber
+      video.addEventListener('timeupdate', () => {
+        if (!video.duration) return;
+        const percent = (video.currentTime / video.duration) * 100;
+        if (scrubberProgress) scrubberProgress.style.width = percent + "%";
+      });
+
+      video.addEventListener('ended', () => {
+        if (scrubberProgress) scrubberProgress.style.width = "0%";
+      });
+
+      // On metadata loaded
+      video.addEventListener('loadedmetadata', () => {
+        updateMuteUI();
+      });
 
       // Cursor-follow play button
       component.addEventListener('mousemove', (e) => {
