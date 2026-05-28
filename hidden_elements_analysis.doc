@@ -3,170 +3,280 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Hidden Elements Analysis Report</title>
+<title>Deep Analysis: Temporarily Hidden Website Content</title>
 <style>
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Segoe UI', Arial, sans-serif;
         color: #333333;
-        line-height: 1.5;
+        line-height: 1.6;
         padding: 40px;
     }
     h1 {
-        font-size: 24pt;
+        font-size: 26pt;
         color: #1B365D;
-        border-bottom: 2px solid #1B365D;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
+        border-bottom: 3px solid #1B365D;
+        padding-bottom: 12px;
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: bold;
     }
     h2 {
-        font-size: 16pt;
+        font-size: 18pt;
         color: #2E5B88;
-        margin-top: 30px;
+        margin-top: 35px;
         margin-bottom: 15px;
-        border-bottom: 1px solid #CCCCCC;
-        padding-bottom: 5px;
+        border-bottom: 1.5px solid #CCCCCC;
+        padding-bottom: 6px;
+        font-weight: 600;
     }
     h3 {
-        font-size: 12pt;
+        font-size: 13pt;
         color: #4A779D;
-        margin-top: 20px;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    p {
+        font-size: 11pt;
+        margin-bottom: 15px;
+    }
+    .meta-box {
+        background-color: #F8F9FA;
+        border: 1px solid #E9ECEF;
+        border-left: 5px solid #1B365D;
+        padding: 15px 20px;
+        margin-bottom: 30px;
+        font-size: 10.5pt;
+    }
+    .meta-item {
+        margin-bottom: 5px;
+    }
+    .hidden-badge {
+        background-color: #D9534F;
+        color: #FFFFFF;
+        padding: 3px 8px;
+        font-size: 9pt;
+        font-weight: bold;
+        border-radius: 3px;
+        display: inline-block;
+        margin-bottom: 10px;
     }
     table {
         width: 100%;
         border-collapse: collapse;
+        margin-top: 15px;
         margin-bottom: 25px;
     }
     th, td {
         border: 1px solid #DDDDDD;
-        padding: 10px;
+        padding: 12px;
         text-align: left;
-        font-size: 10pt;
+        font-size: 10.5pt;
+        vertical-align: top;
     }
     th {
         background-color: #F2F5F8;
-        font-weight: bold;
         color: #1B365D;
-    }
-    .line-number {
         font-weight: bold;
-        color: #888888;
-        width: 80px;
     }
-    .code-block {
-        font-family: 'Courier New', Courier, monospace;
-        background-color: #F8F9FA;
+    .content-card {
+        background-color: #F8F9FB;
         border: 1px solid #E9ECEF;
-        padding: 10px;
-        font-size: 9.5pt;
-        white-space: pre-wrap;
-        word-break: break-all;
+        border-left: 4px solid #4A779D;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 0 4px 4px 0;
     }
-    .meta-info {
-        font-size: 10pt;
-        color: #666666;
-        margin-bottom: 30px;
+    .card-title {
+        font-weight: bold;
+        font-size: 11.5pt;
+        color: #1B365D;
+        margin-bottom: 5px;
+    }
+    .card-body {
+        font-size: 10.5pt;
+        color: #555555;
+    }
+    .code-span {
+        font-family: 'Courier New', Courier, monospace;
+        background-color: #F1F3F5;
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 9.5pt;
+        color: #C7254E;
     }
 </style>
 </head>
 <body>
 
-<h1>Hidden Elements Analysis Report</h1>
-<div class="meta-info">
-    <strong>Date of Analysis:</strong> 28/5/2026, 9:31:59 pm<br>
-    <strong>Project Directory:</strong> c:\Users\Acer\Desktop\premium Portfolio<br>
-    <strong>Scope:</strong> Full scan of index.html and showreel-player.html for commented-out markup, CSS hidden classes, and display:none inline styles.
+<h1>Deep Analysis: Temporarily Hidden Content & Sections</h1>
+
+<div class="meta-box">
+    <div class="meta-item"><strong>Date of Analysis:</strong> 28/5/2026, 9:36:28 pm</div>
+    <div class="meta-item"><strong>Target Files:</strong> index.html, showreel-player.html</div>
+    <div class="meta-item"><strong>Workspace Location:</strong> c:\Users\Acer\Desktop\premium Portfolio</div>
+    <div class="meta-item"><strong>Document Purpose:</strong> Line-by-line textual record of all sections and components currently disabled in the markup or stylesheets.</div>
 </div>
 
-<p>This report documents all content, sections, features, and variables that have been hidden or disabled within the source code. This includes elements hidden by CSS style rules, explicit inline display overrides, and blocks of HTML code that have been commented out.</p>
+<p>This report documents the exact text content and structural details of the sections that are currently temporarily hidden from view in the portfolio website. This ensures that hidden content can be reviewed and restored without loss of original textual copy.</p>
 
-<h2>File: index.html</h2><h3>1. Explicitly Hidden Elements (Inline styles: display: none)</h3><table>
-            <tr>
-                <th class="line-number">Line</th>
-                <th>Hidden Element & inline Style Attributes</th>
-            </tr><tr>
-                <td class="line-number">Line 2416</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display:none;&quot;&gt;&lt;path d=&quot;M6 19h4V5H6v14zm8-14v14h4V5h-4z&quot;/&gt;&lt;/svg&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2421</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-sound-on&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2483</td>
-                <td><div class="code-block">&lt;section class=&quot;ios-player-section reveal-up&quot; id=&quot;mobile-showcase&quot; style=&quot;display: none !important;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2513</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-sound-off&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2525</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2545</td>
-                <td><div class="code-block">&lt;section class=&quot;contact-section&quot; id=&quot;contact&quot; style=&quot;display: none !important;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2741</td>
-                <td><div class="code-block">&lt;section class=&quot;faq-section&quot; id=&quot;faq&quot; style=&quot;display: none !important;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 2744</td>
-                <td><div class="code-block">&lt;div style=&quot;display: none;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 3026</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 3034</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-sound-on&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
-            </tr></table><h3>2. CSS Rules set to Hide Elements (Selector: display: none)</h3><table>
-            <tr>
-                <th class="line-number">Line</th>
-                <th>Target Class/Selector</th>
-                <th>CSS Rule Declaration</th>
-            </tr><tr>
-                <td class="line-number">Line 445</td>
-                <td><strong>.nav-links</strong></td>
-                <td><div class="code-block">.nav-links { display: none ... }</div></td>
-            </tr><tr>
-                <td class="line-number">Line 610</td>
-                <td><strong>.caption</strong></td>
-                <td><div class="code-block">.caption {
-      display: none ... }</div></td>
-            </tr><tr>
-                <td class="line-number">Line 833</td>
-                <td><strong>.theme-toggle .sun-icon</strong></td>
-                <td><div class="code-block">.theme-toggle .sun-icon { display: none ... }</div></td>
-            </tr><tr>
-                <td class="line-number">Line 836</td>
-                <td><strong>.theme-toggle .moon-icon</strong></td>
-                <td><div class="code-block">.theme-toggle .moon-icon { display: none ... }</div></td>
-            </tr><tr>
-                <td class="line-number">Line 1724</td>
-                <td><strong>.review-star-error</strong></td>
-                <td><div class="code-block">.review-star-error {
-      font-size: 12px;
-      color: #ff3b30;
-      margin-top: 6px;
-      display: none ... }</div></td>
-            </tr><tr>
-                <td class="line-number">Line 1762</td>
-                <td><strong>.review-form-error</strong></td>
-                <td><div class="code-block">.review-form-error {
-      font-size: 13px;
-      color: #ff3b30;
-      margin-top: 10px;
-      text-align: center;
-      display: none ... }</div></td>
-            </tr><tr>
-                <td class="line-number">Line 1800</td>
-                <td><strong>.marquee-row-2</strong></td>
-                <td><div class="code-block">.marquee-row-2 {
-        display: none ... }</div></td>
-            </tr></table><h3>3. Commented-out HTML Markup & Content Blocks</h3><p>No significant commented-out HTML code blocks found.</p><h2>File: showreel-player.html</h2><h3>1. Explicitly Hidden Elements (Inline styles: display: none)</h3><table>
-            <tr>
-                <th class="line-number">Line</th>
-                <th>Hidden Element & inline Style Attributes</th>
-            </tr><tr>
-                <td class="line-number">Line 254</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-pause&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display:none;&quot;&gt;</div></td>
-            </tr><tr>
-                <td class="line-number">Line 262</td>
-                <td><div class="code-block">&lt;svg class=&quot;icon-sound-on&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; style=&quot;display: none;&quot;&gt;</div></td>
-            </tr></table><h3>2. CSS Rules set to Hide Elements (Selector: display: none)</h3><p>No CSS rules found set to hide selectors globally.</p><h3>3. Commented-out HTML Markup & Content Blocks</h3><p>No significant commented-out HTML code blocks found.</p>
+<hr style="border: 0; border-top: 1px solid #EEEEEE; margin: 30px 0;">
+
+<h2>1. Portfolio Card Captions (Carousel Cards)</h2>
+<div class="hidden-badge">Hidden via CSS (.caption Selector)</div>
+<p>The titles and descriptions overlays for the 5 portfolio videos inside the main carousel are temporarily hidden globally from the card interface via the stylesheet.</p>
+
+<p><strong>CSS Rule Location:</strong> Line 611 in <span class="code-span">index.html</span> (<span class="code-span">.caption { display: none !important; }</span>)</p>
+
+<h3>Text Content of Hidden Captions:</h3>
+<div class="content-card">
+    <div class="card-title">Card 1: Starter Homes</div>
+    <div class="card-body">
+        <strong>Description:</strong> Mortgage home explainer
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Card 2: Finelegends</div>
+    <div class="card-body">
+        <strong>Description:</strong> Beatsync Transition
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Card 3: Project Redbull</div>
+    <div class="card-body">
+        <strong>Description:</strong> Storyboard motion graphics
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Card 4: Frank Automotive</div>
+    <div class="card-body">
+        <strong>Description:</strong> Masked Transitions
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Card 5: Englishbhashi</div>
+    <div class="card-body">
+        <strong>Description:</strong> Educational Explainer
+    </div>
+</div>
+
+
+<h2>2. iOS Player Showcase Section</h2>
+<div class="hidden-badge">Hidden via Inline Style (display: none !important;)</div>
+<p>The interactive iPhone-framed video showcase section showing dynamic mockups and feed edits has been temporarily disabled in the page hierarchy.</p>
+
+<p><strong>HTML Tag Location:</strong> Line 2483 in <span class="code-span">index.html</span> (<span class="code-span">&lt;section class="ios-player-section reveal-up" id="mobile-showcase" style="display: none !important;"&gt;</span>)</p>
+
+<h3>Text Content of Hidden Section:</h3>
+<table>
+    <tr>
+        <th style="width: 250px;">Section Component</th>
+        <th>Original Display Text</th>
+    </tr>
+    <tr>
+        <td><strong>Pill Header Badge</strong></td>
+        <td>The Feed Edit</td>
+    </tr>
+    <tr>
+        <td><strong>Main Showcase Heading (H2)</strong></td>
+        <td>Scroll stopping content, frame by frame.</td>
+    </tr>
+    <tr>
+        <td><strong>Showcase Description (Paragraph)</strong></td>
+        <td>From concept to frame, motion graphics designed for the feed.</td>
+    </tr>
+    <tr>
+        <td><strong>Interactive Assets / Videos</strong></td>
+        <td>Runs video source <span class="code-span">SaaS SFX.mp4</span> with custom play, pause, mute, and progress scrubber toggles.</td>
+    </tr>
+</table>
+
+
+<h2>3. Start a Project Section (Contact Form)</h2>
+<div class="hidden-badge">Hidden via Inline Style (display: none !important;)</div>
+<p>The contact form and project starter form layout sit at the bottom of the page has been temporarily hidden.</p>
+
+<p><strong>HTML Tag Location:</strong> Line 2545 in <span class="code-span">index.html</span> (<span class="code-span">&lt;section class="contact-section" id="contact" style="display: none !important;"&gt;</span>)</p>
+
+<h3>Text Content & Form Fields of Hidden Section:</h3>
+<table>
+    <tr>
+        <th style="width: 250px;">Form Element</th>
+        <th>Field Label & Text Descriptions</th>
+    </tr>
+    <tr>
+        <td><strong>Section Heading</strong></td>
+        <td>Start a Project</td>
+    </tr>
+    <tr>
+        <td><strong>Section Sub-heading</strong></td>
+        <td>Let's craft a story that converts.</td>
+    </tr>
+    <tr>
+        <td><strong>Full Name Field</strong></td>
+        <td>Label: <em>Full Name</em><br>Placeholder: <code>John Doe</code></td>
+    </tr>
+    <tr>
+        <td><strong>Email Address Field</strong></td>
+        <td>Label: <em>Email Address</em><br>Placeholder: <code>john@company.com</code></td>
+    </tr>
+    <tr>
+        <td><strong>Project Description Field</strong></td>
+        <td>Label: <em>Tell me about your project</em><br>Placeholder: <code>Briefly describe your goals, budget, or timeline...</code></td>
+    </tr>
+    <tr>
+        <td><strong>Submit Button CTA</strong></td>
+        <td>Send Message</td>
+    </tr>
+</table>
+
+
+<h2>4. FAQ Section</h2>
+<div class="hidden-badge">Hidden via Inline Style (display: none !important;)</div>
+<p>The frequently asked questions accordion layout has been temporarily hidden from the user interface.</p>
+
+<p><strong>HTML Tag Location:</strong> Line 2741 in <span class="code-span">index.html</span> (<span class="code-span">&lt;section class="faq-section" id="faq" style="display: none !important;"&gt;</span>)</p>
+
+<h3>Text Content of Hidden FAQ Questions & Answers:</h3>
+<div class="content-card">
+    <div class="card-title">Q1: What is your typical turnaround time?</div>
+    <div class="card-body">
+        <strong>Answer:</strong> It depends on the scope. Most short-form videos and ads take 2-3 days, while complex motion graphics or launch videos generally take 1-2 weeks from storyboard to final render.
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Q2: Do you provide source files?</div>
+    <div class="card-body">
+        <strong>Answer:</strong> Yes, for an additional fee, I can hand over the fully organized After Effects or Premiere Pro project files so your team can make future edits seamlessly.
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Q3: What does the revision process look like?</div>
+    <div class="card-body">
+        <strong>Answer:</strong> Every project includes two rounds of revisions. We do a first pass for structural changes, and a final polish for color, audio mixing, and pacing to ensure it's absolutely perfect.
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Q4: Can you handle sound design and mixing?</div>
+    <div class="card-body">
+        <strong>Answer:</strong> Absolutely. Great visuals are nothing without great audio. I include professional sound design, foley, and audio mixing in all my packages.
+    </div>
+</div>
+
+<div class="content-card">
+    <div class="card-title">Secondary Columns Header (Nested)</div>
+    <div class="card-body">
+        <strong>Heading:</strong> Questions & Answers<br>
+        <strong>Subtext:</strong> Find answers to common questions here. If you can't find what you are looking for, feel free to reach out below!
+    </div>
+</div>
+
 </body>
 </html>
