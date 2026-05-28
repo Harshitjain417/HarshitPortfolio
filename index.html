@@ -2947,7 +2947,9 @@
         // Handle click event (trigger only real clicks, ignore drags)
         item.addEventListener('click', () => {
           if (!document.body.classList.contains('is-dragging')) {
-            goToIndex(index);
+            const currentDOMItems = Array.from(track.children);
+            const clickIndex = currentDOMItems.indexOf(item);
+            goToIndex(clickIndex);
           }
         });
         
@@ -3021,31 +3023,32 @@
         });
       });
       
-      domItems = document.querySelectorAll('.carousel-item');
-      
       // 2. Navigation Control Function
       function goToIndex(index) {
-        if (index < 0) {
-          index = domItems.length - 1;
-        } else if (index >= domItems.length) {
-          index = 0;
-        }
         currentIndex = index;
-        updateCarousel();
+        updateCarousel(true);
       }
       
       // 3. Update Visual State and Handle Autoplay
-      function updateCarousel() {
+      function updateCarousel(withTransition = true) {
         const containerWidth = document.querySelector('.carousel-container').offsetWidth;
-        const itemWidth = domItems[0].offsetWidth;
+        const currentDOMItems = track.querySelectorAll('.carousel-item');
+        if (currentDOMItems.length === 0) return;
+        const itemWidth = currentDOMItems[0].offsetWidth;
         const gap = parseFloat(getComputedStyle(track).gap) || 0;
+        
+        if (withTransition) {
+          track.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        } else {
+          track.style.transition = 'none';
+        }
         
         // Calculate offset to perfectly center the active card
         const offset = (containerWidth / 2) - (itemWidth / 2) - (currentIndex * (itemWidth + gap));
         track.style.transform = `translateX(${offset}px)`;
         
         // Update item classes and video playback
-        domItems.forEach((item, i) => {
+        currentDOMItems.forEach((item, i) => {
           const isActive = i === currentIndex;
           item.classList.toggle('active', isActive);
           
@@ -3074,6 +3077,26 @@
         nextBtn.style.cursor = "pointer";
       }
 
+      // Transitionend event listener for endless loop snapping
+      track.addEventListener('transitionend', () => {
+        const currentDOMItems = track.querySelectorAll('.carousel-item');
+        if (currentIndex > 2) {
+          const shiftCount = currentIndex - 2;
+          for (let i = 0; i < shiftCount; i++) {
+            track.appendChild(track.firstElementChild);
+          }
+          currentIndex = 2;
+          updateCarousel(false);
+        } else if (currentIndex < 2) {
+          const shiftCount = 2 - currentIndex;
+          for (let i = 0; i < shiftCount; i++) {
+            track.insertBefore(track.lastElementChild, track.firstElementChild);
+          }
+          currentIndex = 2;
+          updateCarousel(false);
+        }
+      });
+
       // 4. Implement Drag / Swipe Functionality
       track.addEventListener('mousedown', dragStart);
       track.addEventListener('touchstart', dragStart, {passive: true});
@@ -3089,7 +3112,7 @@
       let isActualDrag = false;
 
       function dragStart(e) {
-        if (e.target.closest('.controls')) return;
+        if (e.target.closest('.controls') || e.target.closest('.carousel-mute-btn') || e.target.closest('.carousel-scrubber-bar')) return;
         
         startX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
         isDragging = true;
@@ -3140,18 +3163,14 @@
 
       // 5. Setup Listeners
       window.addEventListener('resize', () => {
-        track.style.transition = 'none';
-        updateCarousel();
-        setTimeout(() => {
-          track.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
-        }, 50);
+        updateCarousel(false);
       });
       
       prevBtn.addEventListener('click', () => goToIndex(currentIndex - 1));
       nextBtn.addEventListener('click', () => goToIndex(currentIndex + 1));
       
       // Initial Layout calculation
-      setTimeout(updateCarousel, 50);
+      setTimeout(() => updateCarousel(false), 50);
 
       // ==========================================
       // 📝 FORM VALIDATION LOGIC
