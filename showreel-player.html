@@ -90,7 +90,8 @@
       /* JS drives the position via top/left px values */
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
       width: var(--vcp-play-btn-size);
       height: var(--vcp-play-btn-size);
       border-radius: var(--vcp-play-btn-radius);
@@ -118,7 +119,7 @@
 
     /* Snap-back state: smooth ease to center when mouse leaves */
     .vcp-play-overlay-btn.snap-back {
-      transition: opacity 0.3s ease, top 0.5s cubic-bezier(0.25, 1, 0.5, 1), left 0.5s cubic-bezier(0.25, 1, 0.5, 1), transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     /* Scale up slightly when playing to indicate pause action */
@@ -318,12 +319,15 @@
 
         playBtn.style.left      = clampedX + 'px';
         playBtn.style.top       = clampedY + 'px';
-        playBtn.style.transform = "none";
+        playBtn.style.opacity   = "";
+        playBtn.style.transform = "scale(1)";
       });
 
       // Fade out + shrink when cursor leaves the player
       component.addEventListener("mouseleave", () => {
-        playBtn.style.transform = "scale(0.4)";
+        playBtn.classList.add("snap-back");
+        playBtn.style.opacity   = "0";
+        playBtn.style.transform = "scale(0)";
       });
 
       function updatePlayStateUI() {

@@ -271,7 +271,8 @@
     .vcp-play-overlay-btn {
       position: absolute;
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
       width: 64px; height: 64px;
       border-radius: 50%;
       background: #fff;
@@ -294,7 +295,7 @@
     }
 
     .vcp-play-overlay-btn.snap-back {
-      transition: opacity 0.3s ease, top 0.5s cubic-bezier(0.25,1,0.5,1), left 0.5s cubic-bezier(0.25,1,0.5,1), transform 0.5s cubic-bezier(0.25,1,0.5,1);
+      transition: opacity 0.3s ease, transform 0.5s cubic-bezier(0.25,1,0.5,1);
     }
 
     .vcp-play-overlay-btn.playing { opacity: 0; }
@@ -3436,14 +3437,14 @@
         const clampedY = Math.min(Math.max(y, 0), rect.height - half * 2);
         playBtn.style.left      = clampedX + 'px';
         playBtn.style.top       = clampedY + 'px';
-        playBtn.style.transform = 'none';
+        playBtn.style.opacity   = '';
+        playBtn.style.transform = 'scale(1)';
       });
 
       component.addEventListener('mouseleave', () => {
         playBtn.classList.add('snap-back');
-        playBtn.style.left      = '50%';
-        playBtn.style.top       = '50%';
-        playBtn.style.transform = 'translate(-50%, -50%) scale(0.4)';
+        playBtn.style.opacity   = '0';
+        playBtn.style.transform = 'scale(0)';
       });
     })();
 
