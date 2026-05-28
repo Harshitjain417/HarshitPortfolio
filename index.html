@@ -695,7 +695,12 @@
       bottom: 20px;
       left: 20px;
       right: 20px;
-      height: 24px;
+      height: 36px;
+      border-radius: 18px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: center;
       cursor: pointer !important;
@@ -703,22 +708,23 @@
       opacity: 0;
       transition: opacity 0.25s ease;
       z-index: 30;
+      padding: 0 16px;
     }
 
-    .carousel-scrubber-bar::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
+    .carousel-scrubber-track {
+      position: relative;
+      width: 100%;
       height: 4px;
       background: rgba(255, 255, 255, 0.25);
       border-radius: 2px;
+      pointer-events: none;
     }
 
     .carousel-scrubber-progress {
       position: absolute;
       left: 0;
-      height: 4px;
+      top: 0;
+      height: 100%;
       width: 0%;
       background-color: #ffffff;
       border-radius: 2px;
@@ -757,23 +763,20 @@
        ========================================== */
     .controls {
       position: absolute;
-      top: 50%;
+      bottom: 40px;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: calc(var(--item-width) + 120px);
-      max-width: 95vw;
+      transform: translateX(-50%);
       display: flex;
-      justify-content: space-between;
+      gap: 16px;
       z-index: 100;
-      pointer-events: none;
     }
 
     .controls button {
       background: var(--accent-color);
       border: 1px solid var(--border-color);
       color: var(--text-color);
-      width: 56px;
-      height: 56px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       cursor: pointer;
       display: flex;
@@ -781,14 +784,6 @@
       justify-content: center;
       backdrop-filter: blur(10px);
       transition: background 0.3s, transform 0.2s, color 0.3s;
-      pointer-events: auto;
-    }
-
-    @media (max-width: 768px) {
-      .controls button {
-        width: 46px;
-        height: 46px;
-      }
     }
 
     .controls button:hover {
@@ -3053,7 +3048,9 @@
 
             <!-- Scrubber Bar -->
             <div class="carousel-scrubber-bar">
-              <div class="carousel-scrubber-progress"></div>
+              <div class="carousel-scrubber-track">
+                <div class="carousel-scrubber-progress"></div>
+              </div>
             </div>
 
             <div class="caption">
@@ -3166,7 +3163,9 @@
         // Click on scrubber to jump/scrub
         scrubberBar.addEventListener('click', (e) => {
           e.stopPropagation();
-          const rect = scrubberBar.getBoundingClientRect();
+          const trackElem = scrubberBar.querySelector('.carousel-scrubber-track');
+          if (!trackElem) return;
+          const rect = trackElem.getBoundingClientRect();
           const clickX = e.clientX - rect.left;
           const pct = Math.max(0, Math.min(1, clickX / rect.width));
           if (video.duration) {
