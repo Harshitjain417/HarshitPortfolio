@@ -2488,9 +2488,8 @@
     }
 
     .icc-outer-card {
-      width: 220px;
-      min-height: 120px;
-      height: auto;
+      width: 200px;
+      height: 120px;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -2520,6 +2519,8 @@
       font-size: 0.78rem;
       font-weight: 400;
       color: #94a3b8;
+      text-align: left;
+      width: 100%;
     }
 
     .icc-pills-row {
@@ -2538,7 +2539,7 @@
     .icc-top-left-card    { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
     .icc-top-right-card   { transform: translate(-50%,-50%) scale(0.7) rotate(15deg); }
     .icc-bottom-left-card { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
-    .icc-bottom-right-card{ transform: translate(-50%,-50%) scale(0.7) rotate(15deg); }
+    .icc-bottom-right-card{ transform: translate(-50%,-50%) scale(0.7) rotate(15deg); height: 155px; }
 
     /* hover state */
     .icc-stage:hover .icc-center-card {
@@ -2590,7 +2591,8 @@
       .icc-center-card { width: 200px; height: 240px; }
       .icc-avatar-wrap { width: 108px; height: 108px; }
       .icc-profile-name { font-size: 1.4rem; }
-      .icc-outer-card { width: 175px; min-height: 95px; height: auto; padding: 0.8rem; }
+      .icc-outer-card { width: 155px; height: 95px; }
+      .icc-bottom-right-card { height: 130px; }
     }
   </style>
 </head>
@@ -2638,30 +2640,25 @@
               <!-- TOP-LEFT CARD -->
               <div class="icc-card icc-outer-card icc-top-left-card">
                 <h3 class="icc-service-title"><span class="icc-highlight">Content</span> strategy</h3>
-                <p class="icc-service-subtitle">ideas that retain, scripting, hooks</p>
+                <p class="icc-service-subtitle">ideas that retain,<br>scripting,<br>hooks</p>
               </div>
 
               <!-- TOP-RIGHT CARD -->
               <div class="icc-card icc-outer-card icc-top-right-card">
                 <h3 class="icc-service-title">Full <span class="icc-highlight">Editing</span> Service</h3>
-                <p class="icc-service-subtitle">Short &amp; long form content, SFX, Trending motions</p>
+                <p class="icc-service-subtitle">Short &amp; long form content,<br>SFX,<br>Trending motions</p>
               </div>
 
               <!-- BOTTOM-LEFT CARD -->
               <div class="icc-card icc-outer-card icc-bottom-left-card">
                 <h3 class="icc-service-title"><span class="icc-highlight">SaaS</span> Motion Graphics</h3>
-                <p class="icc-service-subtitle">product demos, launch videos, ads</p>
-                <div class="icc-pills-row">
-                  <div class="icc-pill icc-pill-1"></div>
-                  <div class="icc-pill icc-pill-2"></div>
-                  <div class="icc-pill icc-pill-3"></div>
-                </div>
+                <p class="icc-service-subtitle">product demos,<br>launch videos,<br>ads</p>
               </div>
 
               <!-- BOTTOM-RIGHT CARD -->
               <div class="icc-card icc-outer-card icc-bottom-right-card">
                 <h3 class="icc-service-title"><span class="icc-highlight">Vibe</span> Coding</h3>
-                <p class="icc-service-subtitle">UI/UX - interactive Interfaces, Backend - Full-stack, Fully functional websites, personal saas tools, Orchestrate agentic IDE Ai</p>
+                <p class="icc-service-subtitle">UI/UX - interactive Interfaces,<br>Backend - Full-stack,<br>Fully functional websites,<br>personal saas tools,<br>Orchestrate agentic IDE Ai</p>
               </div>
 
             </div>
