@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | Harshit Jain | Interactive Command Centre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Inter:wght@300;400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================
+       🎨 CORE STYLES & LAYOUT
+       ========================================== */
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #050505;
+      --card-bg: #f5f5f5;
+      --accent-color: rgba(0, 0, 0, 0.05);
+      --border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #050505;
+      --text-color: #ffffff;
+      --card-bg: #111;
+      --accent-color: rgba(255, 255, 255, 0.05);
+      --border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    /* ==========================================
+       🕸️ INTERACTIVE HOVER GRID BACKGROUND
+       ========================================== */
+    .grid-mesh {
+      display: grid;
+      width: 100vw;
+      height: 100vh;
+      gap: 1px;
+      background: transparent;
+      position: fixed;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .grid-cell {
+      background-color: var(--bg-color);
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      transition: background-color 0.4s ease;
+    }
+
+    /* ==========================================
+       🌗 THEME TOGGLE BUTTON
+       ========================================== */
+    .theme-toggle {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+      z-index: 1000;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--accent-color);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      background: var(--border-color);
+    }
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+    .theme-toggle .sun-icon { display: none; }
+    .theme-toggle .moon-icon { display: block; }
+    [data-theme="dark"] .theme-toggle .sun-icon { display: block; }
+    [data-theme="dark"] .theme-toggle .moon-icon { display: none; }
+
+    /* ==========================================
+       🌅 NAVIGATION HEADER
+       ========================================== */
+    .hero-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 5vw;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      letter-spacing: -0.02em;
+    }
+
+    .logo p {
+      font-size: 0.9rem;
+      color: var(--text-color);
+      opacity: 0.6;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: opacity 0.3s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.7;
+    }
+
+    .btn {
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: inline-block;
+      transition: transform 0.3s, background 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--text-color);
+      color: var(--bg-color);
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .logo h1 { font-size: 1.4rem; }
+      .logo p { font-size: 0.75rem; }
+    }
+
+    /* ==========================================
+       🎯 ABOUT PAGE LAYOUT & HEADER
+       ========================================== */
+    .about-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 5vw 80px;
+      z-index: 5;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .reviews-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 20px;
+    }
+
+    :root .reviews-pill {
+      background: rgba(0,0,0,0.04);
+      border-color: rgba(0,0,0,0.08);
+      color: rgba(0,0,0,0.6);
+    }
+    [data-theme="dark"] .reviews-pill {
+      background: rgba(255,255,255,0.06);
+      border-color: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.7);
+    }
+
+    .reviews-pill-dot {
+      width: 8px;
+      height: 8px;
+      background: #2ecc71;
+      border-radius: 50%;
+      animation: reviewPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes reviewPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0); }
+    }
+
+    .about-header h2 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--text-color);
+    }
+
+    @media (max-width: 768px) {
+      .about-header h2 {
+        font-size: 2rem;
+      }
+    }
+
+    /* ==========================================
+       🎯 INTERACTIVE COMMAND CENTRE (ICC)
+       ========================================== */
+    .icc-wrapper {
+      width: 100%;
+      max-width: 640px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icc-stage {
+      --icc-card-bg: #ffffff;
+      --icc-card-border: 1px solid rgba(226, 232, 240, 0.8);
+      --icc-card-shadow: 0 4px 20px -2px rgba(0,0,0,0.06), 0 2px 8px -1px rgba(0,0,0,0.04);
+      --icc-purple: #7c3aed;
+      --icc-ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.2);
+      --icc-ease-fluid: cubic-bezier(0.25, 1, 0.5, 1);
+      --icc-transition-speed: 0.75s;
+
+      position: relative;
+      width: 100%;
+      max-width: 640px;
+      height: 420px;
+      background: transparent;
+      border: none;
+      overflow: visible;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .icc-card-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      perspective: 1000px;
+    }
+
+    .icc-tilt {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+      transition: transform 0.5s var(--icc-ease-fluid);
+    }
+
+    .icc-card {
+      background: var(--icc-card-bg);
+      border: var(--icc-card-border);
+      border-radius: 18px;
+      box-shadow: var(--icc-card-shadow);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      user-select: none;
+      will-change: transform, opacity, box-shadow;
+      transition:
+        transform var(--icc-transition-speed) var(--icc-ease-spring),
+        opacity var(--icc-transition-speed) var(--icc-ease-fluid),
+        box-shadow var(--icc-transition-speed) var(--icc-ease-fluid);
+    }
+
+    .icc-center-card {
+      width: 260px;
+      height: 310px;
+      position: absolute;
+      z-index: 10;
+      transform: translate(-50%, -50%) scale(1);
+      top: 50%;
+      left: 50%;
+      padding: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      gap: 1.1rem;
+    }
+
+    .icc-avatar-wrap {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.22);
+    }
+
+    .icc-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+    }
+
+    .icc-profile-name {
+      font-family: 'Cormorant Garamond', 'Georgia', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 1.85rem;
+      color: #1a1720;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .icc-outer-card {
+      width: 200px;
+      height: 120px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      padding: 1.1rem;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      gap: 0.4rem;
+    }
+
+    .icc-service-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      line-height: 1.3;
+    }
+
+    .icc-highlight { color: var(--icc-purple); }
+
+    .icc-service-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: #94a3b8;
+      text-align: left;
+      width: 100%;
+    }
+
+    /* hidden state */
+    .icc-top-left-card    { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
+    .icc-top-right-card   { transform: translate(-50%,-50%) scale(0.7) rotate(15deg); }
+    .icc-bottom-left-card { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
+    .icc-bottom-right-card{ transform: translate(-50%,-50%) scale(0.7) rotate(15deg); height: 155px; }
+
+    /* hover state */
+    .icc-stage:hover .icc-center-card {
+      transform: translate(-50%,-50%) scale(0.96) translateZ(10px);
+      box-shadow: 0 30px 60px -15px rgba(15,23,42,0.1), 0 15px 30px -10px rgba(15,23,42,0.06);
+    }
+    .icc-stage:hover .icc-outer-card {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .icc-stage:hover .icc-top-left-card {
+      transform: translate(calc(-50% - 240px), calc(-50% - 130px)) rotate(-8deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(59,130,246,0.15);
+    }
+    .icc-stage:hover .icc-top-right-card {
+      transform: translate(calc(-50% + 240px), calc(-50% - 130px)) rotate(8deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(139,92,246,0.15);
+    }
+    .icc-stage:hover .icc-bottom-left-card {
+      transform: translate(calc(-50% - 240px), calc(-50% + 130px)) rotate(-4deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(16,185,129,0.15);
+    }
+    .icc-stage:hover .icc-bottom-right-card {
+      transform: translate(calc(-50% + 240px), calc(-50% + 130px)) rotate(5deg) scale(1) translateZ(5px);
+      box-shadow: 0 20px 40px -10px rgba(245,158,11,0.15);
+    }
+
+    /* dark theme ICC adjustments */
+    [data-theme="dark"] .icc-stage {
+      --icc-card-bg: var(--card-bg);
+      --icc-card-border: 1px solid var(--border-color);
+      --icc-card-shadow: 0 4px 24px -2px rgba(0,0,0,0.4), 0 2px 10px -1px rgba(0,0,0,0.3);
+    }
+    [data-theme="dark"] .icc-profile-name { color: #ffffff; }
+    [data-theme="dark"] .icc-service-title { color: #e2e8f0; }
+
+    @media (max-width: 1024px) {
+      .icc-stage { height: 360px; }
+    }
+    @media (max-width: 768px) {
+      .icc-stage { height: 300px; }
+      .icc-center-card { width: 200px; height: 240px; }
+      .icc-avatar-wrap { width: 108px; height: 108px; }
+      .icc-profile-name { font-size: 1.4rem; }
+      .icc-outer-card { width: 155px; height: 95px; }
+      .icc-bottom-right-card { height: 130px; }
+    }
+
+    /* ==========================================
+       ✨ SCROLL ANIMATIONS
+       ========================================== */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), 
+                  transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen Interactive Grid Background -->
+  <div class="grid-mesh" id="gridMesh"></div>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle Theme">
+    <svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    <svg class="moon-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  </button>
+
+  <!-- NAVIGATION -->
+  <nav class="hero-nav">
+    <div class="logo">
+      <h1>Harshit jain</h1>
+      <p>Video Editor &amp; Motion Graphics Artist</p>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="index.html#cta" class="btn btn-primary">Contact Now</a>
+    </div>
+  </nav>
+
+  <!-- MAIN AREA -->
+  <main class="about-main">
+    <div class="about-header reveal-up">
+      <div class="reviews-pill">
+        <span class="reviews-pill-dot"></span>
+        Interactive Command Centre
+      </div>
+      <h2>Hover to explore my expertise.</h2>
+    </div>
+
+    <!-- INTERACTIVE COMMAND CENTRE -->
+    <div class="icc-wrapper reveal-up">
+      <div class="icc-stage" id="iccStage">
+        <div class="icc-card-wrapper">
+          <div class="icc-tilt" id="iccTilt">
+
+            <!-- CENTER CARD — Profile -->
+            <div class="icc-card icc-center-card">
+              <div class="icc-avatar-wrap">
+                <img class="icc-avatar" src="My Upscaled.png" alt="Harshit Jain" />
+              </div>
+              <h2 class="icc-profile-name">Harshit Jain</h2>
+            </div>
+
+            <!-- TOP-LEFT CARD -->
+            <div class="icc-card icc-outer-card icc-top-left-card">
+              <h3 class="icc-service-title"><span class="icc-highlight">Content</span> strategy</h3>
+              <p class="icc-service-subtitle">ideas that retain,<br>scripting,<br>hooks</p>
+            </div>
+
+            <!-- TOP-RIGHT CARD -->
+            <div class="icc-card icc-outer-card icc-top-right-card">
+              <h3 class="icc-service-title">Full <span class="icc-highlight">Editing</span> Service</h3>
+              <p class="icc-service-subtitle">Short &amp; long form content,<br>SFX,<br>Trending motions</p>
+            </div>
+
+            <!-- BOTTOM-LEFT CARD -->
+            <div class="icc-card icc-outer-card icc-bottom-left-card">
+              <h3 class="icc-service-title"><span class="icc-highlight">SaaS</span> Motion Graphics</h3>
+              <p class="icc-service-subtitle">product demos,<br>launch videos,<br>ads</p>
+            </div>
+
+            <!-- BOTTOM-RIGHT CARD -->
+            <div class="icc-card icc-outer-card icc-bottom-right-card">
+              <h3 class="icc-service-title"><span class="icc-highlight">Vibe</span> Coding</h3>
+              <p class="icc-service-subtitle">UI/UX - interactive Interfaces,<br>Backend - Full-stack,<br>Fully functional websites,<br>personal saas tools,<br>Orchestrate agentic IDE Ai</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // ==========================================
+    // ✨ SCROLL REVEAL LOGIC
+    // ==========================================
+    document.addEventListener("DOMContentLoaded", () => {
+      const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+    });
+
+    // ==========================================
+    // 🌓 THEME CHANGER LOGIC
+    // ==========================================
+    document.addEventListener("DOMContentLoaded", () => {
+      const themeToggle = document.getElementById('themeToggle');
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      
+      if (currentTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+      }
+
+      themeToggle.addEventListener('click', () => {
+          let theme = document.documentElement.getAttribute('data-theme');
+          if (theme === 'dark') {
+              document.documentElement.removeAttribute('data-theme');
+              localStorage.setItem('theme', 'light');
+          } else {
+              document.documentElement.setAttribute('data-theme', 'dark');
+              localStorage.setItem('theme', 'dark');
+          }
+          const gridMesh = document.getElementById('gridMesh');
+          if (gridMesh) gridMesh.style.background = 'transparent';
+      });
+    });
+
+    // ==========================================
+    // 🕸️ HOVER GRID ENGINE
+    // ==========================================
+    const gridMesh = document.getElementById('gridMesh');
+    const CELL_SIZE = 130;
+
+    function buildGrid() {
+      if (!gridMesh) return;
+      gridMesh.innerHTML = '';
+      
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      
+      const cols = Math.ceil(width / CELL_SIZE);
+      const rows = Math.ceil(height / CELL_SIZE);
+      
+      gridMesh.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+      gridMesh.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+      
+      const totalCells = cols * rows;
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('grid-cell');
+        gridMesh.appendChild(cell);
+      }
+    }
+
+    document.addEventListener('mousemove', (e) => {
+      if (!gridMesh) return;
+      const x = e.clientX;
+      const y = e.clientY;
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+
+      const spotColor = isDark
+        ? 'rgba(255, 255, 255, 0.25)' 
+        : 'rgba(0, 0, 0, 0.15)';     
+
+      gridMesh.style.background =
+        `radial-gradient(250px circle at ${x}px ${y}px, ${spotColor} 0%, transparent 100%)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      if (gridMesh) gridMesh.style.background = 'transparent';
+    });
+
+    buildGrid();
+    window.addEventListener('resize', buildGrid);
+
+    // ==========================================
+    // 🎯 INTERACTIVE COMMAND CENTRE — Mouse Tilt
+    // ==========================================
+    (function() {
+      const iccStage = document.getElementById('iccStage');
+      const iccTilt  = document.getElementById('iccTilt');
+      if (!iccStage || !iccTilt) return;
+
+      iccStage.style.setProperty('--icc-mouse-x', '50%');
+      iccStage.style.setProperty('--icc-mouse-y', '50%');
+
+      iccStage.addEventListener('mousemove', (e) => {
+        const rect = iccStage.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        iccStage.style.setProperty('--icc-mouse-x', x + 'px');
+        iccStage.style.setProperty('--icc-mouse-y', y + 'px');
+        const cx = rect.width  / 2;
+        const cy = rect.height / 2;
+        const tiltX = (y - cy) / cy * -6;
+        const tiltY = (x - cx) / cx *  6;
+        iccTilt.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      });
+
+      iccStage.addEventListener('mouseleave', () => {
+        iccTilt.style.transform = 'rotateX(0deg) rotateY(0deg)';
+        iccStage.style.setProperty('--icc-mouse-x', '50%');
+        iccStage.style.setProperty('--icc-mouse-y', '50%');
+      });
+    })();
+  </script>
+</body>
+</html>
