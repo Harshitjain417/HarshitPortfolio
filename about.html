@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About | Harshit Jain | Interactive Command Centre</title>
+  <script>
+    // Immediate theme sync to prevent light flash on load
+    (function() {
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,700&family=Inter:wght@300;400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
@@ -110,6 +119,7 @@
        🌅 NAVIGATION HEADER
        ========================================== */
     .hero-nav {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -132,6 +142,9 @@
     }
 
     .nav-links {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       gap: 40px;
       list-style: none;
