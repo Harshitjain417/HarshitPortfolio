@@ -44,17 +44,28 @@
     /* ==========================================
        🕸️ INTERACTIVE HOVER GRID BACKGROUND
        ========================================== */
-    .grid-mesh {
-      display: grid;
-      width: 100vw;
-      height: 100vh;
-      gap: 1px;
-      background: transparent;
+    .grid-mesh-container {
       position: fixed;
       top: 0;
       left: 0;
-      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
       z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .grid-mesh {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      gap: 1px;
+      background: transparent;
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      z-index: 2;
       pointer-events: none;
       opacity: 0;
       transition: opacity 0.4s ease;
@@ -62,6 +73,24 @@
 
     .grid-mesh.loaded {
       opacity: 1;
+    }
+
+    .grid-spotlight {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 0, 0, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      transform: translate3d(-50%, -50%, 0);
+      will-change: transform;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+
+    [data-theme="dark"] .grid-spotlight {
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
     }
 
     .grid-cell {
@@ -2460,7 +2489,6 @@
       flex-direction: column;
       justify-content: space-between;
       user-select: none;
-      will-change: transform, opacity, box-shadow;
       transition:
         transform var(--icc-transition-speed) var(--icc-ease-spring),
         opacity var(--icc-transition-speed) var(--icc-ease-fluid),
@@ -2622,7 +2650,10 @@
 <body>
 
   <!-- Fullscreen Interactive Grid Background -->
-  <div class="grid-mesh" id="gridMesh"></div>
+  <div class="grid-mesh-container">
+    <div class="grid-spotlight" id="gridSpotlight"></div>
+    <div class="grid-mesh" id="gridMesh"></div>
+  </div>
 
   <!-- HERO SECTION -->
   <section class="hero-section" id="about">
@@ -2779,7 +2810,7 @@
         <div class="iphone-screen" id="playerContainer">
           
           <!-- Video element -->
-          <video class="main-video" id="videoNode" preload="auto" playsinline loop autoplay muted>
+          <video class="main-video" id="videoNode" preload="none" playsinline loop autoplay muted>
             <source src="SaaS SFX.mp4" type="video/mp4">
           </video>
 
@@ -3302,7 +3333,7 @@
         
         item.innerHTML = `
           <div class="carousel-item-inner">
-            <video src="${videoData.url}" loop muted playsinline></video>
+            <video src="${videoData.url}" loop muted playsinline preload="none"></video>
             <div class="overlay"></div>
 
             <!-- Play/Pause Button -->
@@ -3983,22 +4014,16 @@
       }
     }
 
+    const gridSpotlight = document.getElementById('gridSpotlight');
+
     document.addEventListener('mousemove', (e) => {
-      if (!gridMesh) return;
-      const x = e.clientX;
-      const y = e.clientY;
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-
-      const spotColor = isDark
-        ? 'rgba(255, 255, 255, 0.25)' // White lines revealed on dark bg
-        : 'rgba(0, 0, 0, 0.15)';     // Dark lines revealed on light bg
-
-      gridMesh.style.background =
-        `radial-gradient(250px circle at ${x}px ${y}px, ${spotColor} 0%, transparent 100%)`;
+      if (!gridSpotlight) return;
+      gridSpotlight.style.opacity = '1';
+      gridSpotlight.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0) translate3d(-50%, -50%, 0)`;
     });
 
     document.addEventListener('mouseleave', () => {
-      if (gridMesh) gridMesh.style.background = 'transparent';
+      if (gridSpotlight) gridSpotlight.style.opacity = '0';
     });
 
     // Build initial grid
@@ -4020,6 +4045,8 @@
 
       if (!video || !playBtn || !btnMuteToggle || !component) return;
 
+      let userPaused = false;
+
       // Set default initial volume state
       video.muted = true;
       updateMuteUI();
@@ -4027,6 +4054,11 @@
       // Toggle play on overlay button or clicking video area
       component.addEventListener('click', (e) => {
         if (e.target.closest('#hero-btnMuteToggle') || e.target.closest('#hero-play-btn') || e.target.closest('#hero-scrubberBar')) return;
+        togglePlay();
+      });
+
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         togglePlay();
       });
 
@@ -4041,12 +4073,14 @@
 
       function togglePlay() {
         if (video.paused) {
+          userPaused = false;
           video.play().catch(() => {
             video.muted = true;
             updateMuteUI();
             video.play();
           });
         } else {
+          userPaused = true;
           video.pause();
         }
       }
@@ -4161,7 +4195,7 @@
         const heroObserver = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              if (video.paused && !video.ended && playBtn.classList.contains('playing')) {
+              if (video.paused && !video.ended && !userPaused) {
                 video.play().catch(() => {});
               }
             } else {
