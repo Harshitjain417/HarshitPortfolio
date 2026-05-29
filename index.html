@@ -3775,10 +3775,14 @@
 
         // Pad reviews if there are too few (e.g. less than 8), to ensure infinite smooth marquee looping without snapping
         let displayReviews = [...reviews];
-        if (displayReviews.length > 0) {
-          while (displayReviews.length < 8) {
-            displayReviews = displayReviews.concat(reviews);
+        if (displayReviews.length > 0 && displayReviews.length < 8) {
+          // Instead of repeating the single database review, fill the remaining slots with unique dummy reviews
+          const needed = 8 - displayReviews.length;
+          for (let i = 0; i < needed; i++) {
+            displayReviews.push(DUMMY_REVIEWS[i % DUMMY_REVIEWS.length]);
           }
+        } else if (displayReviews.length === 0) {
+          displayReviews = [...DUMMY_REVIEWS];
         }
 
         // Row 1: normal order, duplicated
