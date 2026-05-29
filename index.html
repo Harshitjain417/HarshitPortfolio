@@ -3668,6 +3668,36 @@
         carouselObserver.observe(carouselSection);
       }
 
+      // Delayed/Progressive Preloading for Carousel Videos (UX Optimization)
+      let preloadTriggered = false;
+      function startPreloadingCarousel() {
+        if (preloadTriggered) return;
+        preloadTriggered = true;
+        
+        window.removeEventListener('scroll', triggerPreload);
+        window.removeEventListener('mousemove', triggerPreload);
+        window.removeEventListener('touchstart', triggerPreload);
+
+        const carouselVideos = track.querySelectorAll('video');
+        carouselVideos.forEach(video => {
+          video.preload = 'auto';
+          video.load();
+        });
+      }
+
+      function triggerPreload() {
+        startPreloadingCarousel();
+      }
+
+      window.addEventListener('load', () => {
+        // Trigger after 1.5 seconds of idle time
+        setTimeout(startPreloadingCarousel, 1500);
+        // Or immediately if user interacts
+        window.addEventListener('scroll', triggerPreload, { passive: true });
+        window.addEventListener('mousemove', triggerPreload, { passive: true });
+        window.addEventListener('touchstart', triggerPreload, { passive: true });
+      });
+
       // ==========================================
       // 📝 FORM VALIDATION LOGIC
       // ==========================================
