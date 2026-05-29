@@ -56,6 +56,12 @@
       overflow: hidden;
       z-index: -1;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .grid-mesh.loaded {
+      opacity: 1;
     }
 
     .grid-cell {
@@ -836,6 +842,7 @@
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
       flex-shrink: 0;
+      outline: none;
     }
     .theme-toggle:hover {
       transform: scale(1.1);
@@ -3268,6 +3275,7 @@
       const nextBtn = document.getElementById('nextBtn');
       
       let currentIndex = 5;
+      let carouselIsVisible = false;
       let isDragging = false;
       let startX = 0;
       let startTransform = 0;
@@ -3503,9 +3511,9 @@
           
           const video = item.querySelector('video');
           
-          // Only play videos that are in or near the viewport (active, or 1-2 slides away)
+          // Only play videos that are in or near the viewport (active, or 1-2 slides away) AND carousel is visible
           const isNearViewport = Math.abs(i - currentIndex) <= 2;
-          if (isNearViewport) {
+          if (carouselIsVisible && isNearViewport) {
             video.play().catch(err => console.warn("Autoplay blocked by browser:", err));
           } else {
             video.pause();
@@ -3616,6 +3624,18 @@
       
       // Initial Layout calculation
       setTimeout(() => updateCarousel(false), 50);
+
+      // Intersection Observer for Carousel visibility to optimize CPU/GPU usage
+      const carouselSection = document.getElementById('carousel-section');
+      if (carouselSection && 'IntersectionObserver' in window) {
+        const carouselObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            carouselIsVisible = entry.isIntersecting;
+            updateCarousel(false);
+          });
+        }, { threshold: 0.05 });
+        carouselObserver.observe(carouselSection);
+      }
 
       // ==========================================
       // 📝 FORM VALIDATION LOGIC
@@ -3983,6 +4003,7 @@
 
     // Build initial grid
     buildGrid();
+    if (gridMesh) gridMesh.classList.add('loaded');
     window.addEventListener('resize', buildGrid);
 
     // ==========================================
@@ -4134,6 +4155,22 @@
         playBtn.style.opacity   = '0';
         playBtn.style.transform = 'scale(0)';
       });
+
+      // Intersection Observer to pause hero video when offscreen
+      if ('IntersectionObserver' in window) {
+        const heroObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              if (video.paused && !video.ended && playBtn.classList.contains('playing')) {
+                video.play().catch(() => {});
+              }
+            } else {
+              video.pause();
+            }
+          });
+        }, { threshold: 0.05 });
+        heroObserver.observe(component);
+      }
     })();
 
     // ==========================================
@@ -4282,6 +4319,23 @@
       if (!video.paused) {
         btnPlayPause.style.opacity = "0";
         btnPlayPause.style.pointerEvents = "none";
+      }
+
+      // Intersection Observer to pause iOS video when offscreen or hidden
+      if ('IntersectionObserver' in window) {
+        const iosSection = document.querySelector(".ios-player-section");
+        const iosObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && window.getComputedStyle(iosSection).display !== 'none') {
+              if (video.paused && !video.ended && btnPlayPause.style.opacity === '0') {
+                video.play().catch(() => {});
+              }
+            } else {
+              video.pause();
+            }
+          });
+        }, { threshold: 0.05 });
+        if (iosSection) iosObserver.observe(iosSection);
       }
     });
 
