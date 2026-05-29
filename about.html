@@ -250,7 +250,7 @@
        ========================================== */
     .icc-wrapper {
       width: 100%;
-      max-width: 640px;
+      max-width: 1000px;
       z-index: 10;
       display: flex;
       align-items: center;
@@ -268,8 +268,8 @@
 
       position: relative;
       width: 100%;
-      max-width: 640px;
-      height: 420px;
+      max-width: 1000px;
+      height: 650px;
       background: transparent;
       border: none;
       overflow: visible;
@@ -319,8 +319,8 @@
     }
 
     .icc-center-card {
-      width: 260px;
-      height: 310px;
+      width: 370px;
+      height: 440px;
       position: absolute;
       z-index: 10;
       transform: translate(-50%, -50%) scale(1);
@@ -329,12 +329,12 @@
       padding: 1.5rem;
       justify-content: center;
       align-items: center;
-      gap: 1.1rem;
+      gap: 1.5rem;
     }
 
     .icc-avatar-wrap {
-      width: 140px;
-      height: 140px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
@@ -353,7 +353,7 @@
       font-family: 'Cormorant Garamond', 'Georgia', serif;
       font-style: italic;
       font-weight: 700;
-      font-size: 1.85rem;
+      font-size: 2.6rem;
       color: #1a1720;
       letter-spacing: -0.01em;
       line-height: 1.2;
@@ -362,8 +362,8 @@
     }
 
     .icc-outer-card {
-      width: 200px;
-      height: 120px;
+      width: 280px;
+      height: 170px;
       position: absolute;
       top: 50%;
       left: 50%;
@@ -379,7 +379,7 @@
 
     .icc-service-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1.25rem;
       font-weight: 700;
       color: #0f172a;
       letter-spacing: -0.01em;
@@ -390,18 +390,19 @@
 
     .icc-service-subtitle {
       font-family: 'Inter', sans-serif;
-      font-size: 0.78rem;
+      font-size: 0.92rem;
       font-weight: 400;
       color: #94a3b8;
       text-align: left;
       width: 100%;
+      line-height: 1.5;
     }
 
     /* hidden state */
     .icc-top-left-card    { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
     .icc-top-right-card   { transform: translate(-50%,-50%) scale(0.7) rotate(15deg); }
     .icc-bottom-left-card { transform: translate(-50%,-50%) scale(0.7) rotate(-15deg); }
-    .icc-bottom-right-card{ transform: translate(-50%,-50%) scale(0.7) rotate(15deg); height: 155px; }
+    .icc-bottom-right-card{ transform: translate(-50%,-50%) scale(0.7) rotate(15deg); height: 220px; }
 
     /* hover state */
     .icc-stage:hover .icc-center-card {
@@ -413,19 +414,19 @@
       pointer-events: auto;
     }
     .icc-stage:hover .icc-top-left-card {
-      transform: translate(calc(-50% - 240px), calc(-50% - 130px)) rotate(-8deg) scale(1) translateZ(5px);
+      transform: translate(calc(-50% - 345px), calc(-50% - 195px)) rotate(-8deg) scale(1) translateZ(5px);
       box-shadow: 0 20px 40px -10px rgba(59,130,246,0.15);
     }
     .icc-stage:hover .icc-top-right-card {
-      transform: translate(calc(-50% + 240px), calc(-50% - 130px)) rotate(8deg) scale(1) translateZ(5px);
+      transform: translate(calc(-50% + 345px), calc(-50% - 195px)) rotate(8deg) scale(1) translateZ(5px);
       box-shadow: 0 20px 40px -10px rgba(139,92,246,0.15);
     }
     .icc-stage:hover .icc-bottom-left-card {
-      transform: translate(calc(-50% - 240px), calc(-50% + 130px)) rotate(-4deg) scale(1) translateZ(5px);
+      transform: translate(calc(-50% - 345px), calc(-50% + 195px)) rotate(-4deg) scale(1) translateZ(5px);
       box-shadow: 0 20px 40px -10px rgba(16,185,129,0.15);
     }
     .icc-stage:hover .icc-bottom-right-card {
-      transform: translate(calc(-50% + 240px), calc(-50% + 130px)) rotate(5deg) scale(1) translateZ(5px);
+      transform: translate(calc(-50% + 345px), calc(-50% + 195px)) rotate(5deg) scale(1) translateZ(5px);
       box-shadow: 0 20px 40px -10px rgba(245,158,11,0.15);
     }
 
@@ -439,15 +440,41 @@
     [data-theme="dark"] .icc-service-title { color: #e2e8f0; }
 
     @media (max-width: 1024px) {
-      .icc-stage { height: 360px; }
+      .icc-stage { height: 500px; }
+      .icc-stage:hover .icc-top-left-card {
+        transform: translate(calc(-50% - 300px), calc(-50% - 170px)) rotate(-8deg) scale(1) translateZ(5px);
+      }
+      .icc-stage:hover .icc-top-right-card {
+        transform: translate(calc(-50% + 300px), calc(-50% - 170px)) rotate(8deg) scale(1) translateZ(5px);
+      }
+      .icc-stage:hover .icc-bottom-left-card {
+        transform: translate(calc(-50% - 300px), calc(-50% + 170px)) rotate(-4deg) scale(1) translateZ(5px);
+      }
+      .icc-stage:hover .icc-bottom-right-card {
+        transform: translate(calc(-50% + 300px), calc(-50% + 170px)) rotate(5deg) scale(1) translateZ(5px);
+      }
     }
     @media (max-width: 768px) {
       .icc-stage { height: 300px; }
-      .icc-center-card { width: 200px; height: 240px; }
+      .icc-center-card { width: 200px; height: 240px; gap: 1.1rem; }
       .icc-avatar-wrap { width: 108px; height: 108px; }
       .icc-profile-name { font-size: 1.4rem; }
       .icc-outer-card { width: 155px; height: 95px; }
+      .icc-service-title { font-size: 0.95rem; }
+      .icc-service-subtitle { font-size: 0.78rem; line-height: 1.3; }
       .icc-bottom-right-card { height: 130px; }
+      .icc-stage:hover .icc-top-left-card {
+        transform: translate(calc(-50% - 240px), calc(-50% - 130px)) rotate(-8deg) scale(1) translateZ(5px);
+      }
+      .icc-stage:hover .icc-top-right-card {
+        transform: translate(calc(-50% + 240px), calc(-50% - 130px)) rotate(8deg) scale(1) translateZ(5px);
+      }
+      .icc-stage:hover .icc-bottom-left-card {
+        transform: translate(calc(-50% - 240px), calc(-50% + 130px)) rotate(-4deg) scale(1) translateZ(5px);
+      }
+      .icc-stage:hover .icc-bottom-right-card {
+        transform: translate(calc(-50% + 240px), calc(-50% + 130px)) rotate(5deg) scale(1) translateZ(5px);
+      }
     }
 
     /* ==========================================
@@ -492,14 +519,6 @@
 
   <!-- MAIN AREA -->
   <main class="about-main">
-    <div class="about-header reveal-up">
-      <div class="reviews-pill">
-        <span class="reviews-pill-dot"></span>
-        Interactive Command Centre
-      </div>
-      <h2>Hover to explore my expertise.</h2>
-    </div>
-
     <!-- INTERACTIVE COMMAND CENTRE -->
     <div class="icc-wrapper reveal-up">
       <div class="icc-stage" id="iccStage">
