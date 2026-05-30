@@ -1098,8 +1098,21 @@
       const stage = document.getElementById('iccStage');
       if (stage) {
         setTimeout(() => {
-          stage.classList.add('revealed');
+          // If the user has already interacted, do not add revealed class
+          if (!stage.classList.contains('user-interacted')) {
+            stage.classList.add('revealed');
+          }
         }, 500); // 500ms delay for a smooth entrance transition
+
+        // Once user hovers or touches, remove revealed class to revert to hover logic
+        const removeReveal = () => {
+          stage.classList.add('user-interacted');
+          stage.classList.remove('revealed');
+          stage.removeEventListener('mouseenter', removeReveal);
+          stage.removeEventListener('touchstart', removeReveal);
+        };
+        stage.addEventListener('mouseenter', removeReveal);
+        stage.addEventListener('touchstart', removeReveal);
       }
     });
   </script>
