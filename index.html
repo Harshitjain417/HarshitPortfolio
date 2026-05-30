@@ -2695,7 +2695,8 @@
         box-shadow var(--icc-transition-speed) var(--icc-ease-fluid),
         width 0.6s var(--icc-ease-fluid),
         height 0.6s var(--icc-ease-fluid),
-        padding 0.6s var(--icc-ease-fluid);
+        padding 0.6s var(--icc-ease-fluid),
+        top 0.6s var(--icc-ease-fluid);
     }
 
     /* Disable transitions on mouse tilt when hovering over other things */
@@ -2715,12 +2716,12 @@
     /* Expand the selected card */
     .icc-card.expanded {
       position: absolute !important;
-      top: 50% !important;
+      top: 50%;
       left: 50% !important;
       /* Travel to bottom/downward and fully enlarged */
-      transform: translate(-50%, calc(-50% + 55px)) scale(1) !important;
+      transform: translate(-50%, calc(-50% + 55px)) scale(1);
       width: min(90vw, 720px) !important;
-      height: auto !important;
+      height: auto;
       min-height: 360px;
       max-height: 80vh;
       overflow-y: auto;
@@ -2740,7 +2741,8 @@
         box-shadow 0.6s var(--icc-ease-fluid),
         width 0.6s var(--icc-ease-fluid),
         height 0.6s var(--icc-ease-fluid),
-        padding 0.6s var(--icc-ease-fluid);
+        padding 0.6s var(--icc-ease-fluid),
+        top 0.6s var(--icc-ease-fluid);
     }
 
     /* Expanded Typography styles */
@@ -4758,25 +4760,58 @@
     // ==========================================
     (function() {
       const stage = document.getElementById('iccStage');
+      const player = document.getElementById('hero-showreel');
       if (!stage) return;
 
       const outerCards = stage.querySelectorAll('.icc-outer-card');
-      
+
+      function alignExpandedCard() {
+        if (!player) return;
+        const expandedCard = stage.querySelector('.icc-card.expanded');
+        if (!expandedCard) return;
+
+        if (window.innerWidth > 768) {
+          const playerRect = player.getBoundingClientRect();
+          const stageRect = stage.getBoundingClientRect();
+          const relativeTop = playerRect.top - stageRect.top;
+
+          expandedCard.style.top = `${relativeTop}px`;
+          expandedCard.style.height = `${playerRect.height}px`;
+          expandedCard.style.transform = 'translate(-50%, 0) scale(1)';
+        } else {
+          // Let responsive CSS handle mobile layout
+          expandedCard.style.top = '';
+          expandedCard.style.height = '';
+          expandedCard.style.transform = '';
+        }
+      }
+
+      function clearExpandedCardStyles(card) {
+        if (!card) return;
+        card.style.top = '';
+        card.style.height = '';
+        card.style.transform = '';
+      }
+
       outerCards.forEach(card => {
         // Expand card on click
         card.addEventListener('click', (e) => {
           // If already expanded or click was on the close button, ignore
           if (card.classList.contains('expanded') || e.target.closest('.icc-close-btn')) return;
           
-          // Close any other expanded card first (just in case)
+          // Close any other expanded card first
           const currentlyExpanded = stage.querySelector('.icc-card.expanded');
           if (currentlyExpanded && currentlyExpanded !== card) {
             currentlyExpanded.classList.remove('expanded');
+            clearExpandedCardStyles(currentlyExpanded);
           }
 
           // Add active class to stage and clicked card
           stage.classList.add('has-expanded');
           card.classList.add('expanded');
+          
+          // Trigger alignment
+          alignExpandedCard();
         });
 
         // Close button click handler
@@ -4786,6 +4821,7 @@
             e.stopPropagation(); // Prevent card click event from refiring
             card.classList.remove('expanded');
             stage.classList.remove('has-expanded');
+            clearExpandedCardStyles(card);
           });
         }
       });
@@ -4799,12 +4835,17 @@
           // Close on clicking outside of both the card and the stage
           expandedCard.classList.remove('expanded');
           stage.classList.remove('has-expanded');
+          clearExpandedCardStyles(expandedCard);
         } else if (expandedCard && !expandedCard.contains(e.target) && (e.target.closest('.icc-center-card') || e.target === stage || e.target.closest('.icc-card-wrapper'))) {
           // Close if clicking the center card, the stage itself, or card wrapper
           expandedCard.classList.remove('expanded');
           stage.classList.remove('has-expanded');
+          clearExpandedCardStyles(expandedCard);
         }
       });
+
+      // Maintain alignment on resize
+      window.addEventListener('resize', alignExpandedCard);
     })();
 
     // ==========================================
