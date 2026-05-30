@@ -2506,7 +2506,7 @@
       height: 310px;
       position: absolute;
       z-index: 10;
-      transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(1) translateZ(5px);
       top: 50%;
       left: 50%;
       padding: 1.5rem;
@@ -2724,7 +2724,7 @@
       top: 50%;
       left: 50% !important;
       /* Travel to bottom/downward and fully enlarged */
-      transform: translate(-50%, calc(-50% + 55px)) scale(1) translateZ(100px) !important;
+      transform: translate(-50%, calc(-50% + 55px)) scale(1) translateZ(100px);
       width: min(90vw, 720px) !important;
       height: auto;
       min-height: 360px;
@@ -2873,6 +2873,10 @@
     .icc-card.expanded .icc-close-btn {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    body.icc-has-expanded .hero-content {
+      z-index: 99999 !important;
     }
 
     /* Responsive adjustments */
@@ -4824,6 +4828,7 @@
           // Add active class to stage and clicked card
           stage.classList.add('has-expanded');
           card.classList.add('expanded');
+          document.body.classList.add('icc-has-expanded');
           
           // Trigger alignment
           alignExpandedCard();
@@ -4836,6 +4841,7 @@
             e.stopPropagation(); // Prevent card click event from refiring
             card.classList.remove('expanded');
             stage.classList.remove('has-expanded');
+            document.body.classList.remove('icc-has-expanded');
             clearExpandedCardStyles(card);
           });
         }
@@ -4850,11 +4856,13 @@
           // Close on clicking outside of both the card and the stage
           expandedCard.classList.remove('expanded');
           stage.classList.remove('has-expanded');
+          document.body.classList.remove('icc-has-expanded');
           clearExpandedCardStyles(expandedCard);
         } else if (expandedCard && !expandedCard.contains(e.target) && (e.target.closest('.icc-center-card') || e.target === stage || e.target.closest('.icc-card-wrapper'))) {
           // Close if clicking the center card, the stage itself, or card wrapper
           expandedCard.classList.remove('expanded');
           stage.classList.remove('has-expanded');
+          document.body.classList.remove('icc-has-expanded');
           clearExpandedCardStyles(expandedCard);
         }
       });
