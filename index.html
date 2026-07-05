@@ -2902,10 +2902,21 @@
     .pricing-section {
       width: 100vw;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 80px 20px 100px;
       position: relative;
+    }
+
+    .pricing-cards-wrapper {
+      display: flex;
+      gap: 32px;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 120px;
     }
 
     /* Pricing-scoped variables */
@@ -2968,7 +2979,8 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 740px;
+      max-width: 580px;
+      flex: 1;
       background: var(--pricing-bg-card);
       backdrop-filter: blur(40px) saturate(1.4);
       -webkit-backdrop-filter: blur(40px) saturate(1.4);
@@ -3150,6 +3162,56 @@
       background: var(--pricing-bg-features);
     }
 
+    /* Single-column feature list for SaaS card */
+    .pricing-features-list {
+      margin: 0 24px 28px;
+      border: 1px solid var(--pricing-border-cell);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--pricing-bg-features);
+      padding: 24px 28px 28px;
+    }
+
+    .pricing-features-list ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .pricing-features-list ul li {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--pricing-text-secondary);
+      line-height: 1.35;
+      padding-left: 18px;
+      position: relative;
+      transition: all 0.25s ease;
+    }
+
+    .pricing-features-list ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--pricing-accent);
+      opacity: 0.35;
+      transition: all 0.25s ease;
+    }
+
+    .pricing-features-list ul li:hover {
+      color: var(--pricing-text-primary);
+      transform: translateX(3px);
+    }
+
+    .pricing-features-list ul li:hover::before {
+      opacity: 1;
+      box-shadow: 0 0 8px var(--pricing-accent-glow-strong);
+    }
+
     .pricing-feature-column {
       padding: 24px 22px 28px;
       position: relative;
@@ -3304,14 +3366,35 @@
     }
 
     /* Pricing Responsive */
+    @media (max-width: 900px) {
+      .pricing-cards-wrapper {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .pricing-card {
+        max-width: 580px;
+      }
+    }
+
     @media (max-width: 600px) {
       .pricing-section {
         padding: 60px 16px 80px;
       }
 
+      .pricing-cards-wrapper {
+        gap: 24px;
+        margin-top: 80px;
+      }
+
       .pricing-features-grid {
         grid-template-columns: 1fr;
         margin: 0 16px 20px;
+      }
+
+      .pricing-features-list {
+        margin: 0 16px 20px;
+        padding: 20px;
       }
 
       .pricing-feature-column:nth-child(2) {
@@ -3603,80 +3686,124 @@
 
     </div>
 
-    <div class="pricing-card pricing-reveal" id="pricing-card" style="margin-top: 120px;">
-      <!-- Header -->
-      <div class="pricing-card-header">
-        <h2>Reels/Shorts</h2>
-      </div>
+    <div class="pricing-cards-wrapper">
 
-      <!-- Price -->
-      <div class="pricing-price-section">
-        <span class="pricing-price" id="pricing-price-value" data-target="150">
-          <span class="pricing-currency">$</span>0/-
-        </span>
-        <span class="pricing-label">Per Reel</span>
-      </div>
-
-      <div class="pricing-divider"></div>
-
-      <!-- Features Grid -->
-      <p class="pricing-section-title">What's included</p>
-      <div class="pricing-features-grid">
-
-        <!-- Edit -->
-        <div class="pricing-feature-column">
-          <h3>
-            <span class="pricing-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
-            Edit
-          </h3>
-          <ul>
-            <li>Hook-optimized cut</li>
-            <li>Script-based editing</li>
-            <li>Hook text animation</li>
-            <li>Kinetic typography</li>
-            <li>Advanced subtitle anim.</li>
-            <li>Stock overlays</li>
-          </ul>
+      <!-- SaaS Product Explainer Card -->
+      <div class="pricing-card pricing-reveal" id="pricing-card-saas">
+        <!-- Header -->
+        <div class="pricing-card-header">
+          <h2>SaaS Product Explainer</h2>
         </div>
 
-        <!-- Audio -->
-        <div class="pricing-feature-column">
-          <h3>
-            <span class="pricing-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-            Audio
-          </h3>
+        <!-- Price -->
+        <div class="pricing-price-section">
+          <span class="pricing-price" id="pricing-price-saas" data-target="2000">
+            <span class="pricing-currency">$</span>0
+          </span>
+          <span class="pricing-label">Per Video</span>
+        </div>
+
+        <div class="pricing-divider"></div>
+
+        <!-- Features List -->
+        <p class="pricing-section-title">What's included</p>
+        <div class="pricing-features-list">
           <ul>
+            <li>Product understanding</li>
+            <li>Script according to product</li>
+            <li>Professional AI voice over for narration</li>
+            <li>Storyboards of software</li>
+            <li>Animations inside After Effects</li>
+            <li>Synced sound effects on every UI</li>
             <li>Background music</li>
-            <li>SFX layering</li>
-            <li>Noise removal</li>
-            <li>Parametric EQ</li>
-            <li>Loudness maximizer</li>
-            <li>Mouth click removal</li>
           </ul>
         </div>
 
-        <!-- Visuals -->
-        <div class="pricing-feature-column">
-          <h3>
-            <span class="pricing-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg></span>
-            Visuals
-          </h3>
-          <ul>
-            <li>Heavy motion graphics</li>
-            <li>Custom animations</li>
-            <li>Cinematic color grade</li>
-            <li>Advanced color treat.</li>
-          </ul>
+        <!-- Tags -->
+        <div class="pricing-tags-row">
+          <span class="pricing-tag">1 min to 5 min max</span>
+          <span class="pricing-tag">4 days to 1 week delivery</span>
+          <span class="pricing-tag">3–4 revisions</span>
+        </div>
+      </div>
+
+      <!-- Reels/Shorts Card -->
+      <div class="pricing-card pricing-reveal" id="pricing-card">
+        <!-- Header -->
+        <div class="pricing-card-header">
+          <h2>Reels/Shorts</h2>
         </div>
 
+        <!-- Price -->
+        <div class="pricing-price-section">
+          <span class="pricing-price" id="pricing-price-value" data-target="150">
+            <span class="pricing-currency">$</span>0/-
+          </span>
+          <span class="pricing-label">Per Reel</span>
+        </div>
+
+        <div class="pricing-divider"></div>
+
+        <!-- Features Grid -->
+        <p class="pricing-section-title">What's included</p>
+        <div class="pricing-features-grid">
+
+          <!-- Edit -->
+          <div class="pricing-feature-column">
+            <h3>
+              <span class="pricing-icon"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+              Edit
+            </h3>
+            <ul>
+              <li>Hook-optimized cut</li>
+              <li>Script-based editing</li>
+              <li>Hook text animation</li>
+              <li>Kinetic typography</li>
+              <li>Advanced subtitle anim.</li>
+              <li>Stock overlays</li>
+            </ul>
+          </div>
+
+          <!-- Audio -->
+          <div class="pricing-feature-column">
+            <h3>
+              <span class="pricing-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
+              Audio
+            </h3>
+            <ul>
+              <li>Background music</li>
+              <li>SFX layering</li>
+              <li>Noise removal</li>
+              <li>Parametric EQ</li>
+              <li>Loudness maximizer</li>
+              <li>Mouth click removal</li>
+            </ul>
+          </div>
+
+          <!-- Visuals -->
+          <div class="pricing-feature-column">
+            <h3>
+              <span class="pricing-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg></span>
+              Visuals
+            </h3>
+            <ul>
+              <li>Heavy motion graphics</li>
+              <li>Custom animations</li>
+              <li>Cinematic color grade</li>
+              <li>Advanced color treat.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Tags -->
+        <div class="pricing-tags-row">
+          <span class="pricing-tag">60 sec max</span>
+          <span class="pricing-tag">3–4 day delivery</span>
+          <span class="pricing-tag">2 revisions</span>
+        </div>
       </div>
 
-      <!-- Tags -->
-      <div class="pricing-tags-row">
-        <span class="pricing-tag">60 sec max</span>
-        <span class="pricing-tag">3–4 day delivery</span>
-        <span class="pricing-tag">2 revisions</span>
-      </div>
     </div>
   </section>
 
@@ -5447,43 +5574,48 @@
 
   // ===== Pricing Count-Up Animation =====
   (function() {
-    function animatePricingPrice(el, from, to, duration) {
+    function animatePricingPrice(el, from, to, duration, suffix) {
       const start = performance.now();
       function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
       function tick(now) {
         const elapsed = now - start;
         const progress = Math.min(elapsed / duration, 1);
         const value = Math.round(from + (to - from) * easeOut(progress));
-        el.innerHTML = '<span class="pricing-currency">$</span>' + value + '/-';
+        el.innerHTML = '<span class="pricing-currency">$</span>' + value + suffix;
         if (progress < 1) requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
     }
 
-    const pricingCard = document.getElementById('pricing-card');
-    const pricingPriceEl = document.getElementById('pricing-price-value');
-    if (pricingCard && pricingPriceEl) {
-      const target = parseInt(pricingPriceEl.getAttribute('data-target'), 10);
-      let pricingAnimated = false;
+    function setupPricingCard(cardId, priceElId, suffix) {
+      const card = document.getElementById(cardId);
+      const priceEl = document.getElementById(priceElId);
+      if (card && priceEl) {
+        const target = parseInt(priceEl.getAttribute('data-target'), 10);
+        let animated = false;
 
-      const pricingObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            // Reveal the card
-            pricingCard.classList.add('pricing-visible');
-            // Count-up animation
-            if (!pricingAnimated) {
-              pricingAnimated = true;
-              setTimeout(function() {
-                animatePricingPrice(pricingPriceEl, 0, target, 1400);
-              }, 400);
+        const observer = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              card.classList.add('pricing-visible');
+              if (!animated) {
+                animated = true;
+                setTimeout(function() {
+                  animatePricingPrice(priceEl, 0, target, 1400, suffix);
+                }, 400);
+              }
             }
-          }
-        });
-      }, { threshold: 0.2 });
+          });
+        }, { threshold: 0.2 });
 
-      pricingObserver.observe(pricingCard);
+        observer.observe(card);
+      }
     }
+
+    // SaaS card (no /- suffix)
+    setupPricingCard('pricing-card-saas', 'pricing-price-saas', '');
+    // Reels card (with /- suffix)
+    setupPricingCard('pricing-card', 'pricing-price-value', '/-');
   })();
 
   </script>
